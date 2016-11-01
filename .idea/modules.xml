@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Dachser.iml" filepath="$PROJECT_DIR$/Dachser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Dachser.iml" filepath="$PROJECT_DIR$/.idea/Dachser.iml" />
     </modules>
   </component>
 </project>
