@@ -28,8 +28,8 @@ public class GameWindow extends Frame implements Runnable{
 
 
     void initGame(){
-        this.setTitle("Demo Game 1945");
-        this.setSize(1366, 800);
+        this.setTitle("Dachser");
+        this.setSize(760, 570);
         this.setVisible(true);
 //        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 //        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
