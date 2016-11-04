@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 //abstract Class: lop chua moi su vat the hien bang hinh ve trong game
 public abstract class GameObject {
-    private int posX, posY;
+    protected int posX, posY;
     BufferedImage sprite;
 
 
