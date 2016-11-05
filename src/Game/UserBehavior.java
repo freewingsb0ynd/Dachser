@@ -1,3 +1,5 @@
+package Game;
+
 /**
  * Created by Hoangelato on 04/11/2016.
  */

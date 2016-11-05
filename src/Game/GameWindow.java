@@ -1,4 +1,4 @@
-/**
+package Game; /**
  * Created by Hoangelato on 01/11/2016.
  */
 
