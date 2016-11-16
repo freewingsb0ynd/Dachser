@@ -14,7 +14,7 @@ public class Conveyor extends GameObject {
     @Override
     public void loadImage() {
         try {
-            this.sprite = ImageIO.read(new File("resource/conveyor/1_end/17.png"));
+            this.sprite = ImageIO.read(new File("resource/conveyor/1_end/1_end(1).png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
