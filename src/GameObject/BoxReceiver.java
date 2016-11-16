@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by admin on 11/5/2016.
  */
-public class BoxReceiver extends GameObject{
+public class BoxReceiver {
     protected Color color;
 
     public boolean Finish(Color boxColor){

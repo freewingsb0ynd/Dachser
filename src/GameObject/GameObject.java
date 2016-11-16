@@ -12,7 +12,7 @@ public abstract class GameObject {
     protected int posX, posY;
     BufferedImage sprite;
 
-
+    abstract void loadImage();
 
     public void draw(Graphics g){
         g.drawImage(sprite, posX, posY, null);

@@ -2,6 +2,7 @@ package Game; /**
  * Created by Hoangelato on 01/11/2016.
  */
 
+import GameObject.Conveyor;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -26,43 +27,25 @@ public class GameWindow extends Frame implements Runnable{
         loadImage();
     }
 
-
-    void initGame(){
-        this.setTitle("Dachser");
-        this.setSize(760, 570);
-        this.setVisible(true);
-//        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-//        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-//                cursorImg, new Point(0, 0), "blank cursor");
-//        this.setCursor(blankCursor);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                System.exit(0);
-            }
-        });
-
-    }
+    Conveyor conveyor1End= new Conveyor(100,100);
 
     void loadImage() {
         try {
-
-            background = ImageIO.read(new File("resource/Image/image 96.bmp"));
+            background = ImageIO.read(new File("resource/Image/background_4.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        conveyor1End.loadImage();
     }
 
     void initWindow(){
         this.setTitle("Dachser");
-        this.setSize(760, 570);
+        this.setSize(1280, 720);
         this.setVisible(true);
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-                cursorImg, new Point(0, 0), "blank cursor");
-        this.setCursor(blankCursor);
+//        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+//                cursorImg, new Point(0, 0), "blank cursor");
+//        this.setCursor(blankCursor);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -70,8 +53,6 @@ public class GameWindow extends Frame implements Runnable{
                 System.exit(0);
             }
         });
-
-
 
     }
     void gameUpdate(){
@@ -93,12 +74,14 @@ public class GameWindow extends Frame implements Runnable{
     @Override
     public void update(Graphics g) {
         if(bufferImage == null){
-            bufferImage = new BufferedImage(760, 570, 1);
+            bufferImage = new BufferedImage(1280, 720, 1);
         }
         Graphics bufferGraphics = bufferImage.getGraphics();
         bufferGraphics.drawImage(background, 0, 0, null);
         g.drawImage(bufferImage, 0, 0, null);
         //System.out.println("Paint");
+
+        conveyor1End.draw(g);
     }
 
 
