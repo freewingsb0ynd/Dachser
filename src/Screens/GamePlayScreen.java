@@ -4,6 +4,7 @@ import GameObject.Conveyor;
 import Helper.AnimationCreator;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by PC on 17/11/2016.
@@ -31,5 +32,30 @@ public class GamePlayScreen extends Screen {
         conveyor1End.draw(g);
 //        conveyor1MidAni.draw(g, 100+38, 100-18);
 //        conveyor1EndAni.draw(g, 100, 100);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

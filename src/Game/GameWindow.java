@@ -4,7 +4,9 @@ package Game; /**
 
 import GameObject.Conveyor;
 import Helper.AnimationCreator;
+import Screens.GameManager;
 import Screens.GamePlayScreen;
+import Screens.MenuScreen;
 import Screens.Screen;
 import javafx.animation.Animation;
 import sun.audio.AudioData;
@@ -25,11 +27,15 @@ public class GameWindow extends Frame implements Runnable{
     BufferedImage bufferImage;
     BufferedImage background;
     BufferedImage mouseIcon;
-    Screen gamePlayingScreen = new GamePlayScreen();
+//    Screen gamePlayingScreen = new GamePlayScreen();
 
     public GameWindow() throws IOException {
         initWindow();
         loadImage();
+
+        MenuScreen menuScreen = new MenuScreen(this);
+        this.addMouseListener(menuScreen);
+        GameManager.getInstance().getStackScreen().push(menuScreen);
     }
 
 
@@ -59,7 +65,7 @@ public class GameWindow extends Frame implements Runnable{
 
     }
     void gameUpdate(){
-        gamePlayingScreen.update();
+//        gamePlayingScreen.update();
         //update
     }
 
@@ -80,14 +86,14 @@ public class GameWindow extends Frame implements Runnable{
         if(bufferImage == null){
             bufferImage = new BufferedImage(1280, 720, 1);
         }
+
+//        bufferGraphics.drawImage(background, 0, 0, null);
+//        gamePlayingScreen.draw(bufferGraphics);
+
         Graphics bufferGraphics = bufferImage.getGraphics();
-        bufferGraphics.drawImage(background, 0, 0, null);
-
-        gamePlayingScreen.draw(bufferGraphics);
-
+//        bufferGraphics.drawImage(background, 0, 0, null);
+        GameManager.getInstance().getStackScreen().peek().draw(bufferGraphics);
         g.drawImage(bufferImage, 0, 0, null);
-        //System.out.println("Paint");
-
 
     }
 

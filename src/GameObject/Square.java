@@ -10,6 +10,4 @@ public class Square{
 //        posX = x;
 //        posY = y;
     }
-
-
 }
