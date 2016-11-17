@@ -7,6 +7,7 @@ import Screens.GameManager;
 import Screens.GamePlayScreen;
 import Screens.MenuScreen;
 import Screens.Screen;
+import com.sun.glass.ui.Size;
 import javafx.animation.Animation;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
@@ -27,6 +28,7 @@ public class GameWindow extends Frame implements Runnable{
     BufferedImage background;
     BufferedImage mouseIcon;
 //    Screen gamePlayingScreen = new GamePlayScreen();
+    final Size windowSize = new Size(720,480);
 
     public GameWindow() throws IOException {
         initWindow();
@@ -48,7 +50,7 @@ public class GameWindow extends Frame implements Runnable{
 
     void initWindow(){
         this.setTitle("Dachser");
-        this.setSize(1280, 720);
+        this.setSize(windowSize.width, windowSize.height);
         this.setVisible(true);
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 //        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
@@ -65,6 +67,7 @@ public class GameWindow extends Frame implements Runnable{
     }
     void gameUpdate(){
 //        gamePlayingScreen.update();
+        GameManager.getInstance().getStackScreen().peek().update();
         //update
     }
 
@@ -83,7 +86,7 @@ public class GameWindow extends Frame implements Runnable{
     @Override
     public void update(Graphics g) {
         if(bufferImage == null){
-            bufferImage = new BufferedImage(1280, 720, 1);
+            bufferImage = new BufferedImage(windowSize.width, windowSize.height, 1);
         }
 
 //        bufferGraphics.drawImage(background, 0, 0, null);
