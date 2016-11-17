@@ -1,37 +1,46 @@
 package Screens;
 
 import GameObject.Conveyor;
-import Helper.AnimationCreator;
+import Helper.AnimationHelper;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
+
+import static GameObject.Conveyor.*;
 
 /**
  * Created by PC on 17/11/2016.
  */
 public class GamePlayScreen extends Screen {
     Conveyor conveyor1End;
-    AnimationCreator conveyor1EndAni;
-    AnimationCreator conveyor1MidAni;
+
+
+    Vector<Conveyor> conveyorList;
 
     public GamePlayScreen() {
-        conveyor1End = new Conveyor(90,90);
-        conveyor1EndAni = new AnimationCreator("resource/conveyor/1_end/1_end(", 199, 4);
-        conveyor1MidAni = new AnimationCreator("resource/conveyor/1_mid1/1_mid1(", 199, 4);
+        conveyorList = new Vector<Conveyor>();
+
+        conveyorList.add(new Conveyor(92,90,TYPE_X_END));
+        conveyorList.add(new Conveyor(92,90,TYPE_X_END));
+
+
+
     }
 
     @Override
     public void update() {
-        conveyor1EndAni.update();
-        conveyor1MidAni.update();
+        for (Conveyor conveyorItems: conveyorList){
+            conveyorItems.update();
+        }
+
 
     }
 
     @Override
     public void draw(Graphics g) {
         conveyor1End.draw(g);
-//        conveyor1MidAni.draw(g, 100+38, 100-18);
-//        conveyor1EndAni.draw(g, 100, 100);
+
     }
 
     @Override

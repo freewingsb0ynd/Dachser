@@ -10,12 +10,17 @@ import java.util.ArrayList;
 /**
  * Created by PC on 16/11/2016.
  */
-public class AnimationCreator {
+public class AnimationHelper {
     private ArrayList<BufferedImage> frames = new ArrayList<>();
     private int index = 0;
     private int countTime = 0;
     private int time;
-    public AnimationCreator(String imagestring,int time, int imageNumber){
+
+    public AnimationHelper(int countTime, int imageNumber) {
+
+    }
+
+    public AnimationHelper(String imagestring, int time, int imageNumber){
         this.time = time;
         try {
             for (int i = 1; i < imageNumber+1; i++){
@@ -37,6 +42,7 @@ public class AnimationCreator {
                 index++;
             }
         }
+
     }
     public void draw(Graphics g, int posX, int posY){
         g.drawImage(frames.get(index), posX, posY, null);
