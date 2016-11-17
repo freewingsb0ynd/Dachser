@@ -4,6 +4,8 @@ package Game; /**
 
 import GameObject.Conveyor;
 import Helper.AnimationCreator;
+import Screens.GamePlayScreen;
+import Screens.Screen;
 import javafx.animation.Animation;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
@@ -23,15 +25,12 @@ public class GameWindow extends Frame implements Runnable{
     BufferedImage bufferImage;
     BufferedImage background;
     BufferedImage mouseIcon;
+    Screen gamePlayingScreen = new GamePlayScreen();
 
     public GameWindow() throws IOException {
         initWindow();
         loadImage();
     }
-
-    Conveyor conveyor1End= new Conveyor(100,100);
-    AnimationCreator conveyor1EndAni = new AnimationCreator("resource/conveyor/1_end/1_end(", 199, 4);
-    AnimationCreator conveyor1MidAni = new AnimationCreator("resource/conveyor/1_mid1/1_mid1(", 199, 4);
 
 
     void loadImage() {
@@ -40,7 +39,6 @@ public class GameWindow extends Frame implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        conveyor1End.loadImage();
     }
 
     void initWindow(){
@@ -61,9 +59,7 @@ public class GameWindow extends Frame implements Runnable{
 
     }
     void gameUpdate(){
-        conveyor1EndAni.update();
-        conveyor1MidAni.update();
-
+        gamePlayingScreen.update();
         //update
     }
 
@@ -87,10 +83,7 @@ public class GameWindow extends Frame implements Runnable{
         Graphics bufferGraphics = bufferImage.getGraphics();
         bufferGraphics.drawImage(background, 0, 0, null);
 
-        //conveyor1End.draw(bufferGraphics);
-        conveyor1MidAni.draw(bufferGraphics, 100+38, 100-18);
-        conveyor1EndAni.draw(bufferGraphics, 100, 100);
-
+        gamePlayingScreen.draw(bufferGraphics);
 
         g.drawImage(bufferImage, 0, 0, null);
         //System.out.println("Paint");

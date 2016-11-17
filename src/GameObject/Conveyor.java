@@ -23,6 +23,7 @@ public class Conveyor extends GameObject {
     public Conveyor(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
+        loadImage();
     }
 
     @Override
