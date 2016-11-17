@@ -39,6 +39,6 @@ public class AnimationCreator {
         }
     }
     public void draw(Graphics g, int posX, int posY){
-        g.drawImage(frames.get(index), posX-frames.get(index).getHeight()/2, posY-frames.get(index).getWidth()/2, null);
+        g.drawImage(frames.get(index), posX, posY, null);
     }
 }
