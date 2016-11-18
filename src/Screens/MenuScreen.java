@@ -18,12 +18,15 @@ public class MenuScreen extends Screen implements MouseListener {
     BufferedImage background, playImage, instructionImage, aboutImage, exitImage, createmapImage;
     Rectangle playRect, instructionRect, aboutRect, exitRect, createmapRect;
     GameWindow gameWindow;
-    final Point firstButtonLocation = new Point(200, 50);
-    final Size buttonSize = new Size(300, 80);
+    final Point firstButtonLocation;
+    final Size buttonSize;
     public MenuScreen(GameWindow gameWindow) throws IOException {
-        loadImage();
-        makeRect();
         this.gameWindow = gameWindow;
+        buttonSize = new Size(300, this.gameWindow.windowSize.height / 8);
+        loadImage();
+        firstButtonLocation = new Point(this.gameWindow.windowSize.width / 2 - this.buttonSize.width / 2, 100);
+        makeRect();
+
     }
 
     private void loadImage(){
@@ -35,11 +38,13 @@ public class MenuScreen extends Screen implements MouseListener {
             exitImage = ImageIO.read(new File("resource/menu button/exit button.png"));
             background = ImageIO.read(new File("resource/image/image 96.bmp"));
 
+
             playImage = setSize(playImage,buttonSize.width,buttonSize.height);
             createmapImage = setSize(createmapImage,buttonSize.width,buttonSize.height);
             instructionImage = setSize(instructionImage,buttonSize.width,buttonSize.height);
             aboutImage = setSize(aboutImage,buttonSize.width,buttonSize.height);
             exitImage = setSize(exitImage,buttonSize.width,buttonSize.height);
+            background = setSize(background,this.gameWindow.windowSize.width , this.gameWindow.windowSize.height);
 
         } catch (IOException e) {
             e.printStackTrace();

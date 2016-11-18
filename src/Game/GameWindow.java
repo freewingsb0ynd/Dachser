@@ -1,26 +1,16 @@
 package Game; /**
  * Created by Hoangelato on 01/11/2016.
  */
-
-import GameObject.Conveyor;
 import Screens.GameManager;
-import Screens.GamePlayScreen;
 import Screens.MenuScreen;
-import Screens.Screen;
 import com.sun.glass.ui.Size;
-import javafx.animation.Animation;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
+
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GameWindow extends Frame implements Runnable{
@@ -28,7 +18,7 @@ public class GameWindow extends Frame implements Runnable{
     BufferedImage background;
     BufferedImage mouseIcon;
 //    Screen gamePlayingScreen = new GamePlayScreen();
-    final Size windowSize = new Size(720,480);
+    public final Size windowSize = new Size(1280,720);
 
     public GameWindow() throws IOException {
         initWindow();

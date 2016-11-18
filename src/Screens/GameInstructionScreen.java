@@ -1,6 +1,7 @@
 package Screens;
 
 import Game.GameWindow;
+import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,9 +25,11 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
     int minImageNumber = 1;
 
     Rectangle nextRect, backRect, homeRect;
-    final Rectangle box = new Rectangle(100,100,500,300);   // vi tri cua man hinh con huong dan
+    final Size guideSize = new Size(500,300); // size cua man hinh huong dan
+    final Rectangle box;   // vi tri cua man hinh con huong dan
     public GameInstructionScreen(GameWindow gameWindow){
         this.gameWindow = gameWindow;
+        box = new Rectangle(this.gameWindow.windowSize.width / 2 - guideSize.width / 2 ,this.gameWindow.windowSize.height / 2 - guideSize.height / 2, guideSize.width,guideSize.height);
         this.loadImage();
         this.makeRect();
     }
@@ -43,6 +46,7 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
             instruction[2] = ImageIO.read(new File("resource/instruction button/instruction2.png"));
             instruction[3] = ImageIO.read(new File("resource/instruction button/instruction3.png"));
 
+            background = setSize(background, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
             backButton = setSize(backButton,50, 50);
             nextButton = setSize(nextButton, 50, 50);
             homeButton = setSize(homeButton, 100, 100);

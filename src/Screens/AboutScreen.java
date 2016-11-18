@@ -32,6 +32,7 @@ public class AboutScreen extends Screens.Screen implements MouseListener {
             background = ImageIO.read(new File("resource/instruction button/about background.jpg"));
             homeButton = ImageIO.read(new File("resource/instruction button/home button.gif"));
 
+            background = setSize(background, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
             homeButton = setSize(homeButton, 100, 100);
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +63,6 @@ public class AboutScreen extends Screens.Screen implements MouseListener {
             Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.removeMouseListener(this);
             this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
-
         }
     }
 
