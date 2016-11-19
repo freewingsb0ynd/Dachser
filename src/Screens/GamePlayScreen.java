@@ -7,6 +7,7 @@ import Helper.AnimationHelper;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,12 +19,12 @@ import static GameObject.Conveyor.*;
  * Created by PC on 17/11/2016.
  */
 public class GamePlayScreen extends Screen {
-    Conveyor conveyor1End;
     BufferedImage background;
 
-
     Vector<Conveyor> conveyorList;
-    Conveyor conveyor1, conveyor2;
+    Conveyor conveyor1, conveyor2, conveyor3;
+
+
 
 
     public GamePlayScreen() {
@@ -31,12 +32,14 @@ public class GamePlayScreen extends Screen {
 
         conveyorList = new Vector<Conveyor>();
 
-        conveyor1 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_X_END);
+        conveyor1 = new ConveyorMoving(92+36*28,90+18*28).getConveyorByType(ConveyorMoving.TYPE_X_END);
 
         conveyor2 = new ConveyorMoving(92+38,90-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
 
-        System.out.println(conveyor1 + "      " + conveyor2);
-        conveyorList.add(conveyor2);
+        conveyor3 = new ConveyorMoving(92+38+38,90-18-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+
+//        conveyorList.add(conveyor3);
+//        conveyorList.add(conveyor2);
         conveyorList.add(conveyor1);
 
 
