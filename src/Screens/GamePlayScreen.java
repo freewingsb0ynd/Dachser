@@ -1,10 +1,15 @@
 package Screens;
 
 import GameObject.Conveyor;
+import GameObject.ConveyorMoving;
 import Helper.AnimationHelper;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
 
 import static GameObject.Conveyor.*;
@@ -14,33 +19,54 @@ import static GameObject.Conveyor.*;
  */
 public class GamePlayScreen extends Screen {
     Conveyor conveyor1End;
+    BufferedImage background;
 
 
     Vector<Conveyor> conveyorList;
+    Conveyor conveyor1, conveyor2;
+
 
     public GamePlayScreen() {
+        loadBackground();
+
         conveyorList = new Vector<Conveyor>();
 
-        conveyorList.add(new Conveyor(92,90,TYPE_X_END));
-        conveyorList.add(new Conveyor(92,90,TYPE_X_END));
+        conveyor1 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_X_END);
+
+        conveyor2 = new ConveyorMoving(92+38,90-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+
+        System.out.println(conveyor1 + "      " + conveyor2);
+        conveyorList.add(conveyor2);
+        conveyorList.add(conveyor1);
+
 
 
 
     }
 
+    void loadBackground() {
+        try {
+            background = ImageIO.read(new File("resource/Image/background_4.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void update() {
-        for (Conveyor conveyorItems: conveyorList){
+        for (Conveyor conveyorItems: conveyorList) {
             conveyorItems.update();
         }
-
 
     }
 
     @Override
     public void draw(Graphics g) {
-        conveyor1End.draw(g);
-
+        g.drawImage(background, 0, 0, null);
+        for (Conveyor conveyorItems: conveyorList){
+            conveyorItems.draw(g);
+        }
     }
 
     @Override

@@ -16,10 +16,6 @@ public class AnimationHelper {
     private int countTime = 0;
     private int time;
 
-    public AnimationHelper(int countTime, int imageNumber) {
-
-    }
-
     public AnimationHelper(String imagestring, int time, int imageNumber){
         this.time = time;
         try {
