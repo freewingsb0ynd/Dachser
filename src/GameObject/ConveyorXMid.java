@@ -5,7 +5,7 @@ import Helper.AnimationHelper;
 import java.awt.*;
 
 /**
- * Created by PC on 17/11/2016.
+ * Created by Hoangelato on 17/11/2016.
  */
 public class ConveyorXMid extends ConveyorMoving {
     protected ConveyorXMid(int posX, int posY) {

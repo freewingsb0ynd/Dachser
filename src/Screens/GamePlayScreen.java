@@ -16,7 +16,7 @@ import java.util.Vector;
 import static GameObject.Conveyor.*;
 
 /**
- * Created by PC on 17/11/2016.
+ * Created by Hoangelato on 17/11/2016.
  */
 public class GamePlayScreen extends Screen {
     BufferedImage background;

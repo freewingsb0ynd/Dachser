@@ -5,7 +5,7 @@ import Helper.AnimationHelper;
 import java.awt.*;
 
 /**
- * Created by PC on 20/11/2016.
+ * Created by Hoangelato on 20/11/2016.
  */
 public class ConveyorYMid extends ConveyorMoving{
     protected ConveyorYMid(int posX, int posY) {

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by PC on 16/11/2016.
+ * Created by Hoangelato on 16/11/2016.
  */
 public class AnimationHelper {
     private ArrayList<BufferedImage> frames = new ArrayList<>();

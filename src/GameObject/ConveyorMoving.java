@@ -5,7 +5,7 @@ import Helper.AnimationHelper;
 import java.awt.*;
 
 /**
- * Created by PC on 19/11/2016.
+ * Created by Hoangelato on 19/11/2016.
  */
 public class ConveyorMoving extends Conveyor {
     public static final int TYPE_X_END = 1;
