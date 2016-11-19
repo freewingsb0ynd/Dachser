@@ -37,6 +37,10 @@ public class ConveyorMoving extends Conveyor {
                 return new ConveyorXEnd(this.posX,this.posY);
             case TYPE_X_MID:
                 return new ConveyorXMid(this.posX,this.posY);
+            case TYPE_Y_END:
+                return new ConveyorYEnd(this.posX,this.posY);
+            case TYPE_Y_MID:
+                return new ConveyorYMid(this.posX,this.posY);
 
 
             default:

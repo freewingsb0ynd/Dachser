@@ -22,7 +22,7 @@ public class GamePlayScreen extends Screen {
     BufferedImage background;
 
     Vector<Conveyor> conveyorList;
-    Conveyor conveyor1, conveyor2, conveyor3;
+    Conveyor conveyor1, conveyor2, conveyor3, conveyor4,conveyor5;
 
 
 
@@ -38,8 +38,15 @@ public class GamePlayScreen extends Screen {
 
         conveyor3 = new ConveyorMoving(92+38+38,90-18-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
 
+        conveyor4 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_Y_END);
+
+        conveyor5 = new ConveyorMoving(92-38,90-18).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
+
+
 //        conveyorList.add(conveyor3);
 //        conveyorList.add(conveyor2);
+        conveyorList.add(conveyor5);
+        conveyorList.add(conveyor4);
         conveyorList.add(conveyor1);
 
 
