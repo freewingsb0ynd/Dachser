@@ -24,11 +24,15 @@ public class GamePlayScreen extends Screen {
     Vector<Conveyor> conveyorList;
     Conveyor conveyor1, conveyor2, conveyor3, conveyor4,conveyor5;
 
-
+    int arrayIndex[][];
 
 
     public GamePlayScreen() {
         loadBackground();
+
+        arrayIndex = new int[17][18];
+
+        
 
         conveyorList = new Vector<Conveyor>();
 
