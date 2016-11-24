@@ -9,7 +9,7 @@ public class Operation {
     private int code;
     private Point p1;
     private Point p2;
-    Operation(int code, Point p1, Point p2){
+    public Operation(int code, Point p1, Point p2){
         this.code = code;
         this.p1 = p1;
         this.p2 = p2;
