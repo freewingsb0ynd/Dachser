@@ -1,11 +1,5 @@
 package CreateMapExtension;
 
-import Screens.GameManager;
-import Screens.Screen;
-
-import java.awt.*;
-import java.util.Stack;
-
 /**
  * Created by Admin on 11/24/2016.
  */
