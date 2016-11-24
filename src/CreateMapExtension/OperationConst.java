@@ -7,14 +7,15 @@ package CreateMapExtension;
 public class OperationConst {
     
     public static final int dragConveyor = 1;
+    public static final int setSource = 17;
 
-    public static final int setWater = 2;
-    public static final int setRoad = 3;
-    public static final int setTree = 4;
+    public static final int setWater = 18;
+    public static final int setRoad = 19;
+    public static final int setTree = 20;
 
-    public static final int setTruck = 5;
-    public static final int setShip = 6;
-    public static final int setPlane = 7;
+    public static final int setTruck = 21;
+    public static final int setShip = 22;
+    public static final int setPlane = 23;
 
-    public static final int setSource = 8;
+
 }

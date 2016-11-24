@@ -22,18 +22,33 @@ public class MapCodeConst {
     public static final int switchDown = 7;
     public static final int switchLeft = 8;
 
-    // vung ve cho dep
-    public static final int water = 9;
-    public static final int road = 10;
-    public static final int tree = 11;
-    // vung ve diem dich
+    //vung chua switch khong doi huong
+    public static final int nonswitchUp = 9;
+    public static final int nonswitchRight = 10;
+    public static final int nonswitchDown = 11;
+    public static final int nonswitchLeft = 12;
 
-    public static final int truck = 12;
-    public static final int ship = 13;
-    public static final int plane = 14;
+    // điem xuat box
+    public static final int endUp = 13;
+    public static final int endRight = 14;
+    public static final int endDown = 15;
+    public static final int endLeft = 16;
 
     //noi san xuat box
+    public static final int source = 17;
 
-    public static final int source = 15;
+    // vung ve cho dep
+    public static final int water = 18;
+    public static final int road = 19;
+    public static final int tree = 20;
+    // vung ve diem dich
+
+    public static final int truck = 21;
+    public static final int ship = 22;
+    public static final int plane = 23;
+
+
+
+
 }
 
