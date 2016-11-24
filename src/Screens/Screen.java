@@ -1,5 +1,7 @@
 package Screens;
 
+import com.sun.glass.ui.Size;
+
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -35,5 +37,8 @@ public abstract class Screen implements MouseListener {
             return dbi;
         }
         return null;
+    }
+    final BufferedImage setSize(BufferedImage sbi, Size size) {
+        return setSize(sbi, size.width, size.height);
     }
 }

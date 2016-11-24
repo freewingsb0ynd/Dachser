@@ -1,4 +1,4 @@
-package CreateMap;
+package CreateMapExtension;
 
 import java.awt.*;
 
@@ -32,4 +32,12 @@ public class LogicPoint extends Point {
     public LogicPoint(int x, int y) {
         super(x, y);
     }
+
+//    public static void main(String[] args) {
+//        int a = 200;
+//        int b = 300;
+//        Point p = new Point(a,b);
+//        LogicPoint lp = LogicPoint.convertPointToLogicPoint(p);
+//        System.out.println("convert(" + a + "," + b + ")" + lp.logicX + "," + lp.logicY);
+//    }
 }

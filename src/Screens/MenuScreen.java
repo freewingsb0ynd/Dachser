@@ -87,7 +87,10 @@ public class MenuScreen extends Screen implements MouseListener {
             GameManager.getInstance().getStackScreen().push(GamePlayScreen);
         }
         if (createmapRect.contains(e.getX(), e.getY())){
-            //kich vao createmap
+            CreateMapScreen createMapScreen = new CreateMapScreen(gameWindow);
+            gameWindow.addMouseListener(createMapScreen);
+            gameWindow.removeMouseListener(this);
+            GameManager.getInstance().getStackScreen().push(createMapScreen);
         }
         if (aboutRect.contains(e.getX(),e.getY())){
             //kich vao about
@@ -95,7 +98,7 @@ public class MenuScreen extends Screen implements MouseListener {
             gameWindow.addMouseListener(aboutScreen);
             gameWindow.removeMouseListener(this);
             GameManager.getInstance().getStackScreen().push(aboutScreen);
-            System.out.println(GameManager.getInstance().getStackScreen().size());
+//            System.out.println(GameManager.getInstance().getStackScreen().size());
         }
         if (instructionRect.contains(e.getX(), e.getY())){
             //kich vao instruction
@@ -103,7 +106,7 @@ public class MenuScreen extends Screen implements MouseListener {
             gameWindow.addMouseListener(gameInstructionScreen);
             gameWindow.removeMouseListener(this);
             GameManager.getInstance().getStackScreen().push(gameInstructionScreen);
-            System.out.println(GameManager.getInstance().getStackScreen().size());
+//            System.out.println(GameManager.getInstance().getStackScreen().size());
         }
         if (exitRect.contains(e.getX(), e.getY())){
             //kich vao exit
