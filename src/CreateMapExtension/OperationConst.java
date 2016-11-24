@@ -5,7 +5,8 @@ package CreateMapExtension;
  */
 // dinh nghia ma cac thao tac thuc hien (dinh nghia code = .. co nghia ntn)
 public class OperationConst {
-    
+
+    public static final int none = 0;
     public static final int dragConveyor = 1;
     public static final int setSource = 17;
 
