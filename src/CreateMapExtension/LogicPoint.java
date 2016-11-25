@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by Nhat on 23/11/2016.
  */
-public class LogicPoint extends Point {
+public class LogicPoint {
     public static final int baseX = 535;
     public static final int baseY = -282;
     public int logicX;
@@ -15,22 +15,32 @@ public class LogicPoint extends Point {
         int x = point.x;
         int y = point.y;
         LogicPoint logicPoint = new LogicPoint(point.x, point.y);
-        logicPoint.x = point.x;
-        logicPoint.y = point.y;
         logicPoint.logicX = (2 * (y - baseY) + (x - baseX))/72;
         logicPoint.logicY = (2 * (y - baseY) - (x - baseX))/72;
         return logicPoint;
     }
 
-    public LogicPoint() {
+    public LogicPoint(){
+        this.logicX = 0;
+        this.logicY = 0;
+    }
+    public LogicPoint(int logicX, int logicY) {
+        this.logicX = logicX;
+        this.logicY = logicY;
     }
 
-    public LogicPoint(Point p) {
-        super(p);
+    public Point convertToPoint(){
+        Point point = new Point();
+        point.x = baseX + 36 * (logicX - logicY);
+        point.y = baseY + 18 * (logicX + logicY);
+        return point;
+    }
+    public int getLogicX() {
+        return logicX;
     }
 
-    public LogicPoint(int x, int y) {
-        super(x, y);
+    public int getLogicY() {
+        return logicY;
     }
 
 //    public static void main(String[] args) {

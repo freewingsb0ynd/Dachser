@@ -88,23 +88,23 @@ public class MenuScreen extends Screen implements MouseListener {
         }
         if (createmapRect.contains(e.getX(), e.getY())){
             CreateMapScreen createMapScreen = new CreateMapScreen(gameWindow);
-            gameWindow.addMouseListener(createMapScreen);
             gameWindow.removeMouseListener(this);
+            gameWindow.addMouseListener(createMapScreen);
             GameManager.getInstance().getStackScreen().push(createMapScreen);
         }
         if (aboutRect.contains(e.getX(),e.getY())){
             //kich vao about
             AboutScreen aboutScreen= new AboutScreen(gameWindow);
-            gameWindow.addMouseListener(aboutScreen);
             gameWindow.removeMouseListener(this);
+            gameWindow.addMouseListener(aboutScreen);
             GameManager.getInstance().getStackScreen().push(aboutScreen);
 //            System.out.println(GameManager.getInstance().getStackScreen().size());
         }
         if (instructionRect.contains(e.getX(), e.getY())){
             //kich vao instruction
             GameInstructionScreen gameInstructionScreen= new GameInstructionScreen(gameWindow);
-            gameWindow.addMouseListener(gameInstructionScreen);
             gameWindow.removeMouseListener(this);
+            gameWindow.addMouseListener(gameInstructionScreen);
             GameManager.getInstance().getStackScreen().push(gameInstructionScreen);
 //            System.out.println(GameManager.getInstance().getStackScreen().size());
         }

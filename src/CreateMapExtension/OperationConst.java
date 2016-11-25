@@ -8,6 +8,11 @@ public class OperationConst {
 
     public static final int none = 0;
     public static final int dragConveyor = 1;
+    public static final int clickDelete = 2;
+    public static final int clickUndo = 3;
+    public static final int clickEraser = 4;
+    public static final int clickSave = 5;
+
     public static final int setSource = 17;
 
     public static final int setWater = 18;
@@ -17,6 +22,8 @@ public class OperationConst {
     public static final int setTruck = 21;
     public static final int setShip = 22;
     public static final int setPlane = 23;
+
+
 
 
 }

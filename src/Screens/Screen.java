@@ -2,6 +2,7 @@ package Screens;
 
 import com.sun.glass.ui.Size;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -10,7 +11,7 @@ import java.awt.peer.MouseInfoPeer;
 /**
  * Created by PC on 17/11/2016.
  */
-public abstract class Screen implements MouseListener {
+public abstract class Screen extends JPanel implements MouseListener {
     public abstract void update();
 
     public abstract void draw(Graphics g);

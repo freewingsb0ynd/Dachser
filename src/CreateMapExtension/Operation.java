@@ -7,7 +7,7 @@ public class Operation {
     private int code;
     private LogicPoint p1;
     private LogicPoint p2;
-    Operation(int code, LogicPoint p1, LogicPoint p2){
+    public Operation(int code, LogicPoint p1, LogicPoint p2){
         this.code = code;
         this.p1 = p1;
         this.p2 = p2;
