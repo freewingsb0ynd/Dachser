@@ -6,6 +6,7 @@ import com.sun.glass.ui.Size;
 import sun.rmi.runtime.Log;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,6 +29,8 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
     private Rectangle backgroundRect, sourceRect, deleteRect, conveyorRect, eraseRect, planeRect, saveRect, shipRect, truckRect, undoRect;
 
     private BufferedImage[] imageInMap = new BufferedImage[30];
+    private BufferedImage cursorImage;
+    private Cursor cursor = Cursor.getDefaultCursor();
 
     private CreateMapManager createMapManager = new CreateMapManager();
     private final Point pointO = new Point(10,30);
@@ -90,8 +93,8 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
     @Override
     public void update() {
-
     }
+
 
     @Override
     public void draw(Graphics g) {
@@ -126,7 +129,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
         // thuc hien draw cai map kia
     }
 
-    private void loadImageInMap(){
+    private void loadImageInMap() {
 
     }
     @Override
@@ -135,12 +138,13 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
         if (conveyorRect.contains(e.getX(), e.getY())){
             status = OperationConst.dragConveyor;
+            this.getGraphics().drawImage(conveyorBtn, e.getX(), e.getY(), null);
             return;
         }
         if (deleteRect.contains(e.getX(), e.getY())){
             status = OperationConst.none;
             Operation op = new Operation(OperationConst.clickDelete, null, null);
-            createMapManager.pushOprationToStack(op);
+            createMapManager.execute(op);
             return;
         }
         if (planeRect.contains(e.getX(), e.getY())){
@@ -183,7 +187,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
                 {
                     LogicPoint lp = LogicPoint.convertPointToLogicPoint(e.getPoint());
                     Operation op = new Operation(status, lp, new LogicPoint());
-                    createMapManager.pushOprationToStack(op);
+                    createMapManager.execute(op);
                     System.out.println("push operate :" + op.getCode() + "," + op.getP1().getLogicX() + "," + op.getP1().getLogicY());
                     break;
                 }
@@ -214,7 +218,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
                 // kiem tra xem finish va start co hop le:
                 if((startDrag.getLogicX() == finishDrag.getLogicX()) || (startDrag.getLogicY() == finishDrag.getLogicY())){
                     Operation op = new Operation(OperationConst.dragConveyor, startDrag, finishDrag);
-                    createMapManager.pushOprationToStack(op);
+                    createMapManager.execute(op);
                     System.out.println("vua push conveyor" + op.getCode() + "doan thang : " + op.getP1() + op.getP2());
                 }
             }
