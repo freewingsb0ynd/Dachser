@@ -14,9 +14,11 @@ public class LogicPoint {
     public static LogicPoint convertPointToLogicPoint(Point point) {
         int x = point.x;
         int y = point.y;
+        int baseInMapX = baseX + 42;
+        int baseInMapY = baseY + 62 - 18;
         LogicPoint logicPoint = new LogicPoint(point.x, point.y);
-        logicPoint.logicX = (2 * (y - baseY) + (x - baseX))/72;
-        logicPoint.logicY = (2 * (y - baseY) - (x - baseX))/72;
+        logicPoint.logicX = (2 * (y - baseInMapY) + (x - baseInMapX))/72;
+        logicPoint.logicY = (2 * (y - baseInMapY) - (x - baseInMapX))/72;
         return logicPoint;
     }
 

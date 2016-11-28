@@ -1,5 +1,6 @@
 package CreateMapExtension;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
@@ -217,16 +218,15 @@ public class CreateMapManager {
 
     private void executeUndo(Stack<Operation> stack) {
         map = new int[36][36];
-        if (stack == null) {
-            return;
-        } else {
-            Operation op;
-            for (int i = 0; i < stack.size(); i++) {
-                op = stack.elementAt(i);
-                this.newMapFromValidOperation(op);
-            }
+        Operation op;
+        if (stack.empty()) {
+            return;}
+
+        for (int i = 0; i < stack.size(); i++) {
+            op = stack.elementAt(i);
+            this.newMapFromValidOperation(op);
         }
-    }
+        }
 
     private void newMapFromValidOperation(Operation operation) {
         //int[][] buffermap = new int[36][36];
@@ -259,8 +259,13 @@ public class CreateMapManager {
                     //de sau lam
                     return;
                 case OperationConst.clickUndo:
-                    operationStack.pop();
-                    this.executeUndo(operationStack);
+                    try{
+                        operationStack.pop();
+                        this.executeUndo(operationStack);
+                    } catch (EmptyStackException e) {
+
+                    }
+
                     return;
                 default:
                     map[x1][y1] = code;
@@ -273,7 +278,7 @@ public class CreateMapManager {
         if(checkValidOperation(operation) == true) {
             int code = operation.getCode();
             newMapFromValidOperation(operation);
-            if (code == OperationConst.clickSave || code == OperationConst.clickUndo || code == OperationConst.none) {
+            if (code != OperationConst.clickSave && code != OperationConst.clickUndo && code != OperationConst.none) {
                 operationStack.push(operation);
             }
             return;

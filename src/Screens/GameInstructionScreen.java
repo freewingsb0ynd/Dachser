@@ -4,6 +4,7 @@ import Game.GameWindow;
 import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,9 +26,13 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
     int minImageNumber = 1;
 
     Rectangle nextRect, backRect, homeRect;
-    final Size guideSize = new Size(500,300); // size cua man hinh huong dan
+    final Size guideSize = new Size(500,500); // size cua man hinh huong dan
     final Rectangle box;   // vi tri cua man hinh con huong dan
     public GameInstructionScreen(GameWindow gameWindow){
+        JPanel jpanel = new JPanel();
+        jpanel.setPreferredSize(new Dimension(200, 50));
+        jpanel.setBackground(Color.blue);
+        this.add(jpanel, BorderLayout.NORTH);
         this.gameWindow = gameWindow;
         box = new Rectangle(this.gameWindow.windowSize.width / 2 - guideSize.width / 2 ,this.gameWindow.windowSize.height / 2 - guideSize.height / 2, guideSize.width,guideSize.height);
         this.loadImage();
@@ -40,7 +45,7 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
             background = ImageIO.read(new File("resource/instruction button/instruction background.png"));
             nextButton = ImageIO.read(new File("resource/instruction button/next button.png"));
             backButton = ImageIO.read(new File("resource/instruction button/back button.png"));
-            homeButton = ImageIO.read(new File("resource/instruction button/home button.gif"));
+            homeButton = ImageIO.read(new File("resource/instruction button/home button.png"));
 
             instruction[1] = ImageIO.read(new File("resource/instruction button/instruction1.png"));
             instruction[2] = ImageIO.read(new File("resource/instruction button/instruction2.png"));
@@ -57,11 +62,9 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
     }
 
     private void makeRect(){
-
         backRect = new Rectangle(box.x ,box.y + guideBox.getHeight(), backButton.getWidth(), backButton.getHeight());
         nextRect = new Rectangle(box.x + guideBox.getWidth() - nextButton.getWidth(), box.y + guideBox.getHeight(),nextButton.getWidth(),nextButton.getHeight());
         homeRect = new Rectangle(this.gameWindow.getWidth()/2 - homeButton.getWidth()/2, this.gameWindow.getHeight() - homeButton.getHeight(), homeButton.getWidth(), homeButton.getHeight());
-
     }
 
     @Override
@@ -71,11 +74,11 @@ public class GameInstructionScreen extends Screens.Screen implements MouseListen
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, null);
-        g.drawImage(guideBox, box.x , box.y, null);
-        g.drawImage(backButton, backRect.x, backRect.y, null);
-        g.drawImage(nextButton, nextRect.x, nextRect.y, null);
-        g.drawImage(homeButton, homeRect.x, homeRect.y, null);
+//        g.drawImage(background, 0, 0, null);
+//        g.drawImage(guideBox, box.x , box.y, null);
+//        g.drawImage(backButton, backRect.x, backRect.y, null);
+//        g.drawImage(nextButton, nextRect.x, nextRect.y, null);
+//        g.drawImage(homeButton, homeRect.x, homeRect.y, null);
     }
 
     @Override
