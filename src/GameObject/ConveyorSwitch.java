@@ -6,6 +6,8 @@ package GameObject;
 public class ConveyorSwitch extends ConveyorFixed {
     protected ConveyorSwitch(int posX, int posY) {
         super(posX, posY);
+
     }
+
 
 }
