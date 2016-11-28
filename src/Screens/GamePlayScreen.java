@@ -1,5 +1,6 @@
 package Screens;
 
+import CreateMapExtension.LogicPoint;
 import GameObject.Conveyor;
 import GameObject.ConveyorMoving;
 import Helper.AnimationHelper;
@@ -22,7 +23,7 @@ public class GamePlayScreen extends Screen {
     BufferedImage background;
 
     Vector<Conveyor> conveyorList;
-    Conveyor conveyor1, conveyor2, conveyor3, conveyor4,conveyor5;
+    Conveyor conveyor1, conveyor2, conveyor3, conveyor4, conveyor5;
 
     int arrayIndex[][];
 
@@ -32,29 +33,45 @@ public class GamePlayScreen extends Screen {
 
         arrayIndex = new int[17][18];
 
-        
 
         conveyorList = new Vector<Conveyor>();
 
-        conveyor1 = new ConveyorMoving(92+36*28,90+18*28).getConveyorByType(ConveyorMoving.TYPE_X_END);
+        for (int x = 16; x < 17; x = x + 4) {
+            for (int y = 17; y < 18; y++) {
+                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+                conveyorList.add(conveyor1);
+            }
 
-        conveyor2 = new ConveyorMoving(92+38,90-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+        }
+//        for (int x = -15; x < 17 ; x = x + 1) {
+//            //if (x % 4 == 0) continue;
+//            // for (int y = - (17 - x) ; y < (17 - x) ; y++) {
+//            conveyor1 = new ConveyorMoving( 571 + 36 * (x ), 312 + 18 * (x ) ).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
+//            conveyorList.add(conveyor1);
+//            // }
+//
+//        }
+//        Point
+/***
+ conveyor1 = new ConveyorMoving(417,251).getConveyorByType(ConveyorMoving.TYPE_X_END);
 
-        conveyor3 = new ConveyorMoving(92+38+38,90-18-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+ conveyor2 = new ConveyorMoving(417 +36, 251 -18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
 
-        conveyor4 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_Y_END);
+ conveyor3 = new ConveyorMoving(92+38+38,90-18-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
 
-        conveyor5 = new ConveyorMoving(92-38,90-18).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
+ conveyor4 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_Y_END);
 
-
-//        conveyorList.add(conveyor3);
-//        conveyorList.add(conveyor2);
-        conveyorList.add(conveyor5);
-        conveyorList.add(conveyor4);
-        conveyorList.add(conveyor1);
+ conveyor5 = new ConveyorMoving(92-38,90-18).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
 
 
+ //        conveyorList.add(conveyor3);
+ conveyorList.add(conveyor2);
+ conveyorList.add(conveyor5);
+ conveyorList.add(conveyor4);
+ conveyorList.add(conveyor1);
 
+
+ *///
 
     }
 
@@ -69,7 +86,7 @@ public class GamePlayScreen extends Screen {
 
     @Override
     public void update() {
-        for (Conveyor conveyorItems: conveyorList) {
+        for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.update();
         }
 
@@ -77,8 +94,8 @@ public class GamePlayScreen extends Screen {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, null);
-        for (Conveyor conveyorItems: conveyorList){
+        g.drawImage(background, 8, 31, null);
+        for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
         }
     }

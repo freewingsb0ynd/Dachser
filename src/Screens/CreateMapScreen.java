@@ -46,17 +46,17 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
         try {
             background = ImageIO.read(new File("resource/Image/background_4.png"));
-            sourceBtn = ImageIO.read(new File("resource/Create map button/source.png"));
-            conveyorBtn = ImageIO.read(new File("resource/Create map button/conveyor.png"));
-            deleteBtn = ImageIO.read(new File("resource/Create map button/delete.png"));
-            eraseBtn = ImageIO.read(new File("resource/Create map button/eraser.png"));
-            planeBtn = ImageIO.read(new File("resource/Create map button/plane.png"));
-            saveBtn = ImageIO.read(new File("resource/Create map button/save.png"));
-            shipBtn = ImageIO.read(new File("resource/Create map button/ship.png"));
-            truckBtn = ImageIO.read(new File("resource/Create map button/truck.png"));
-            undoBtn = ImageIO.read(new File("resource/Create map button/undo.png"));
+            sourceBtn = ImageIO.read(new File("resource/Create map button/Button_source.png"));
+            conveyorBtn = ImageIO.read(new File("resource/Create map button/Button_conveyor.png"));
+            deleteBtn = ImageIO.read(new File("resource/Create map button/Button_delete.png"));
+            eraseBtn = ImageIO.read(new File("resource/Create map button/Button_eraser.png"));
+            planeBtn = ImageIO.read(new File("resource/Create map button/Button_plane.png"));
+            saveBtn = ImageIO.read(new File("resource/Create map button/Button_save.png"));
+            shipBtn = ImageIO.read(new File("resource/Create map button/Button_ship.png"));
+            truckBtn = ImageIO.read(new File("resource/Create map button/Button_truck.png"));
+            undoBtn = ImageIO.read(new File("resource/Create map button/Button_undo.png"));
 
-            background = setSize(background, this.gameWindow.windowSize);
+//            background = setSize(background, this.gameWindow.windowSize);
             sourceBtn = setSize(sourceBtn, this.buttonSize);
             conveyorBtn = setSize(conveyorBtn, this.buttonSize);
             deleteBtn = setSize(deleteBtn, this.buttonSize);
@@ -74,7 +74,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
     private void makeRect(){
 
-        backgroundRect = new Rectangle(0, this.buttonSize.height + this.pointO.y, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
+        backgroundRect = new Rectangle(8, 31, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
         deleteRect = makeRect(0);
         eraseRect = makeRect(1);
         sourceRect = makeRect(2);

@@ -6,8 +6,8 @@ import java.awt.*;
  * Created by Nhat on 23/11/2016.
  */
 public class LogicPoint {
-    public static final int baseX = 535;
-    public static final int baseY = -282;
+    public static final int baseX = 578;
+    public static final int baseY = -319;
     public int logicX;
     public int logicY;
 

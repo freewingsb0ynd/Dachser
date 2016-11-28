@@ -229,7 +229,7 @@ public class CreateMapManager {
     }
 
     private void newMapFromValidOperation(Operation operation) {
-        int[][] buffermap = new int[36][36];
+        //int[][] buffermap = new int[36][36];
         int code = operation.getCode();
         int x1 = operation.getP1().getLogicX();
         int y1 = operation.getP1().getLogicY();
