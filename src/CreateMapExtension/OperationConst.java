@@ -6,22 +6,22 @@ package CreateMapExtension;
 // dinh nghia ma cac thao tac thuc hien (dinh nghia code = .. co nghia ntn)
 public class OperationConst {
 
-    public static final int none = 0;
-    public static final int dragConveyor = 1;
-    public static final int clickDelete = 2;
-    public static final int clickUndo = 3;
-    public static final int clickEraser = 4;
-    public static final int clickSave = 5;
+    public static final int NONE = 0;
+    public static final int DRAG_CONVEYOR = 1;
+    public static final int CLICK_DELETE = 2;
+    public static final int CLICK_UNDO = 3;
+    public static final int CLICK_ERASER = 4;
+    public static final int CLICK_SAVE = 5;
 
-    public static final int setSource = 17;
+    public static final int SET_SOURCE = 17;
 
-    public static final int setWater = 18;
-    public static final int setRoad = 19;
-    public static final int setTree = 20;
+    public static final int SET_WATER = 18;
+    public static final int SET_ROAD = 19;
+    public static final int SET_TREE = 20;
 
-    public static final int setTruck = 21;
-    public static final int setShip = 22;
-    public static final int setPlane = 23;
+    public static final int SET_TRUCK = 21;
+    public static final int SET_SHIP = 22;
+    public static final int SET_PLANE = 23;
 
 
 
