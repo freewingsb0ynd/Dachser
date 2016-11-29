@@ -1,6 +1,6 @@
 package Screens;
 
-import CreateMapExtension.*;
+import CreateMap.*;
 import Game.GameWindow;
 import com.sun.glass.ui.Size;
 
@@ -144,14 +144,14 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
     private void drawMap(Graphics g) {
         int[][] map = createMapManager.getMap();
-        for (int sum = 0; sum <= 60; sum++) {
+        for (int sum = 15; sum <= 60; sum++) {
             for (int i = 0; i <= sum; i++) {
                 int j = sum - i;
                 if ((i <= 35) && (j <= 35)) {
 //                    System.out.println(" i:" + i + " j : " + j + "map : " + map[i][j]);
                     LogicPoint lp = new LogicPoint(i, j);
                     Point p = lp.convertToPoint();
-                    if (map[i][j] != 0) {
+                    if (map[i][j] != MapCodeConst.NOTHING && map[i][j] != MapCodeConst.FORBIDDEN) {
                         g.drawImage(imageInMap[map[i][j]], p.x, p.y, null);
                     }
                 }
@@ -296,12 +296,15 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
         if (backgroundRect.contains(e.getX(), e.getY())) {
             if (status == OperationConst.DRAG_CONVEYOR) {
                 finishDrag = LogicPoint.convertPointToLogicPoint(e.getPoint());
-//                if ((startDrag.getLogicX() == finishDrag.getLogicX()) && (startDrag.getLogicY() == finishDrag.getLogicY())){
-//                    return;
-//                }
-
                 // kiem tra xem finish va start co hop le:
-                if ((startDrag.getLogicX() == finishDrag.getLogicX()) || (startDrag.getLogicY() == finishDrag.getLogicY())) {
+
+                if ((startDrag.getLogicX() == finishDrag.getLogicX())
+                        && (startDrag.getLogicY() == finishDrag.getLogicY())){
+                    return;
+                }
+
+                if ((startDrag.getLogicX() == finishDrag.getLogicX())
+                        || (startDrag.getLogicY() == finishDrag.getLogicY())) {
                     Operation op = new Operation(OperationConst.DRAG_CONVEYOR, startDrag, finishDrag);
                     createMapManager.execute(op);
                     System.out.println("vua push conveyor" + op.getCode() + "doan thang : " + op.getP1().getLogicX() + "," + op.getP1().getLogicY() + " ->" + op.getP2().getLogicX() + "," + op.getP2().getLogicY());
