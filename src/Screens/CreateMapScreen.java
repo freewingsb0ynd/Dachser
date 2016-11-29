@@ -2,13 +2,9 @@ package Screens;
 
 import CreateMapExtension.*;
 import Game.GameWindow;
-import com.sun.deploy.security.CredentialManager;
 import com.sun.glass.ui.Size;
-import org.omg.CORBA.MARSHAL;
-import sun.rmi.runtime.Log;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -22,7 +18,7 @@ import java.io.IOException;
 public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
     //    private Stack<Operation> stack = new Stack<Operation>();
-    private int status = OperationConst.none;
+    private int status = OperationConst.NONE;
     private LogicPoint startDrag = new LogicPoint();
     private LogicPoint finishDrag = new LogicPoint();
     GameWindow gameWindow;
@@ -166,39 +162,39 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
     private void loadImageInMap() {
         try {
-            imageInMap[MapCodeConst.nonswitchDown]
-                = imageInMap[MapCodeConst.conveyorDown]
+            imageInMap[MapCodeConst.NONSWITCH_DOWN]
+                = imageInMap[MapCodeConst.CONVEYOR_DOWN]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_down.png"));
-            imageInMap[MapCodeConst.nonswitchLeft]
-                = imageInMap[MapCodeConst.conveyorLeft]
+            imageInMap[MapCodeConst.NONSWITCH_LEFT]
+                = imageInMap[MapCodeConst.CONVEYOR_LEFT]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_left.png"));
-            imageInMap[MapCodeConst.nonswitchRight]
-                = imageInMap[MapCodeConst.conveyorRight]
+            imageInMap[MapCodeConst.NONSWITCH_RIGHT]
+                = imageInMap[MapCodeConst.CONVEYOR_RIGHT]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_right.png"));
-            imageInMap[MapCodeConst.nonswitchUp]
-                = imageInMap[MapCodeConst.conveyorUp]
+            imageInMap[MapCodeConst.NONSWITCH_UP]
+                = imageInMap[MapCodeConst.CONVEYOR_UP]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_up.png"));
 
-            imageInMap[MapCodeConst.endDown]
-                    = imageInMap[MapCodeConst.endLeft]
-                    = imageInMap[MapCodeConst.endRight]
-                    = imageInMap[MapCodeConst.endUp]
+            imageInMap[MapCodeConst.END_DOWN]
+                    = imageInMap[MapCodeConst.END_LEFT]
+                    = imageInMap[MapCodeConst.END_RIGHT]
+                    = imageInMap[MapCodeConst.END_UP]
                     = ImageIO.read(new File("resource/Create map button/Map_end.png"));
 
-            imageInMap[MapCodeConst.switchDown] = ImageIO.read(new File("resource/Create map button/Map_switch_down.png"));
-            imageInMap[MapCodeConst.switchLeft] = ImageIO.read(new File("resource/Create map button/Map_switch_left.png"));
-            imageInMap[MapCodeConst.switchRight] = ImageIO.read(new File("resource/Create map button/Map_switch_right.png"));
-            imageInMap[MapCodeConst.switchUp] = ImageIO.read(new File("resource/Create map button/Map_switch_up.png"));
+            imageInMap[MapCodeConst.SWITCH_DOWN] = ImageIO.read(new File("resource/Create map button/Map_switch_down.png"));
+            imageInMap[MapCodeConst.SWITCH_LEFT] = ImageIO.read(new File("resource/Create map button/Map_switch_left.png"));
+            imageInMap[MapCodeConst.SWITCH_RIGHT] = ImageIO.read(new File("resource/Create map button/Map_switch_right.png"));
+            imageInMap[MapCodeConst.SWITCH_UP] = ImageIO.read(new File("resource/Create map button/Map_switch_up.png"));
 
-            imageInMap[MapCodeConst.truck] = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
-            imageInMap[MapCodeConst.plane] = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
-            imageInMap[MapCodeConst.ship] = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
+            imageInMap[MapCodeConst.TRUCK] = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
+            imageInMap[MapCodeConst.PLANE] = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
+            imageInMap[MapCodeConst.SHIP] = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
 
-            imageInMap[MapCodeConst.tree] = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
-            imageInMap[MapCodeConst.water] = ImageIO.read(new File("resource/Create map button/Map_water.png"));
-            imageInMap[MapCodeConst.road] = ImageIO.read(new File("resource/Create map button/Map_road.png"));
+            imageInMap[MapCodeConst.TREE] = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
+            imageInMap[MapCodeConst.WATER] = ImageIO.read(new File("resource/Create map button/Map_water.png"));
+            imageInMap[MapCodeConst.ROAD] = ImageIO.read(new File("resource/Create map button/Map_road.png"));
 
-            imageInMap[MapCodeConst.source] = ImageIO.read(new File("resource/Create map button/Map_source.png"));
+            imageInMap[MapCodeConst.SOURCE] = ImageIO.read(new File("resource/Create map button/Map_source.png"));
 
         } catch (IOException e) {
             System.out.println(e);
@@ -212,68 +208,68 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
         System.out.println("logic p =" + f.getLogicX() + "," + f.getLogicY());
 
         if (conveyorRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.dragConveyor;
+            status = OperationConst.DRAG_CONVEYOR;
             return;
         }
         if (deleteRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.none;
-            Operation op = new Operation(OperationConst.clickDelete, new LogicPoint(), new LogicPoint());
+            status = OperationConst.NONE;
+            Operation op = new Operation(OperationConst.CLICK_DELETE, new LogicPoint(), new LogicPoint());
             createMapManager.execute(op);
             return;
         }
         if (planeRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setPlane;
+            status = OperationConst.SET_PLANE;
             return;
         }
         if (shipRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setShip;
+            status = OperationConst.SET_SHIP;
             return;
         }
         if (truckRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setTruck;
+            status = OperationConst.SET_TRUCK;
             return;
         }
         if (sourceRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setSource;
+            status = OperationConst.SET_SOURCE;
             return;
         }
         if (eraseRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.clickEraser;
+            status = OperationConst.CLICK_ERASER;
             return;
         }
         if (undoRect.contains(e.getX(), e.getY())) {
-            Operation op = new Operation(OperationConst.clickUndo, new LogicPoint(), new LogicPoint());
+            Operation op = new Operation(OperationConst.CLICK_UNDO, new LogicPoint(), new LogicPoint());
             createMapManager.execute(op);
             System.out.println("undo");
             return;
         }
         if (saveRect.contains(e.getX(), e.getY())) {
-            Operation op = new Operation(OperationConst.clickSave, new LogicPoint(), new LogicPoint());
+            Operation op = new Operation(OperationConst.CLICK_SAVE, new LogicPoint(), new LogicPoint());
             createMapManager.execute(op);
             return;
         }
         if (waterRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setWater;
+            status = OperationConst.SET_WATER;
             return;
         }
         if (roadRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setRoad;
+            status = OperationConst.SET_ROAD;
             return;
         }
         if (treeRect.contains(e.getX(), e.getY())) {
-            status = OperationConst.setTree;
+            status = OperationConst.SET_TREE;
             return;
         }
         if (backgroundRect.contains(e.getX(), e.getY())) {
             switch (status) {
-                case OperationConst.setSource:
-                case OperationConst.setRoad:
-                case OperationConst.setTree:
-                case OperationConst.setWater:
-                case OperationConst.setPlane:
-                case OperationConst.setShip:
-                case OperationConst.setTruck:
-                case OperationConst.clickEraser: {
+                case OperationConst.SET_SOURCE:
+                case OperationConst.SET_ROAD:
+                case OperationConst.SET_TREE:
+                case OperationConst.SET_WATER:
+                case OperationConst.SET_PLANE:
+                case OperationConst.SET_SHIP:
+                case OperationConst.SET_TRUCK:
+                case OperationConst.CLICK_ERASER: {
                     LogicPoint lp = LogicPoint.convertPointToLogicPoint(e.getPoint());
                     Operation op = new Operation(status, lp, new LogicPoint());
                     createMapManager.execute(op);
@@ -288,7 +284,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (backgroundRect.contains(e.getX(), e.getY())) {
-            if (status == OperationConst.dragConveyor) {
+            if (status == OperationConst.DRAG_CONVEYOR) {
                 startDrag = LogicPoint.convertPointToLogicPoint(e.getPoint());
 
             }
@@ -298,7 +294,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (backgroundRect.contains(e.getX(), e.getY())) {
-            if (status == OperationConst.dragConveyor) {
+            if (status == OperationConst.DRAG_CONVEYOR) {
                 finishDrag = LogicPoint.convertPointToLogicPoint(e.getPoint());
 //                if ((startDrag.getLogicX() == finishDrag.getLogicX()) && (startDrag.getLogicY() == finishDrag.getLogicY())){
 //                    return;
@@ -306,7 +302,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
 
                 // kiem tra xem finish va start co hop le:
                 if ((startDrag.getLogicX() == finishDrag.getLogicX()) || (startDrag.getLogicY() == finishDrag.getLogicY())) {
-                    Operation op = new Operation(OperationConst.dragConveyor, startDrag, finishDrag);
+                    Operation op = new Operation(OperationConst.DRAG_CONVEYOR, startDrag, finishDrag);
                     createMapManager.execute(op);
                     System.out.println("vua push conveyor" + op.getCode() + "doan thang : " + op.getP1().getLogicX() + "," + op.getP1().getLogicY() + " ->" + op.getP2().getLogicX() + "," + op.getP2().getLogicY());
                 }

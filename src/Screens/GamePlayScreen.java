@@ -1,8 +1,6 @@
 package Screens;
 
-import CreateMapExtension.CreateMapManager;
 import CreateMapExtension.LogicPoint;
-import CreateMapExtension.MapCodeConst;
 import GameObject.*;
 
 import javax.imageio.ImageIO;
@@ -14,9 +12,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import static CreateMapExtension.MapCodeConst.*;
-import static GameObject.ColorBox.*;
 import static GameObject.ConveyorMoving.*;
-import static GameObject.Direction.*;
 
 /**
  * Created by Hoangelato on 17/11/2016.
@@ -34,13 +30,13 @@ public class GamePlayScreen extends Screen {
         loadBackground();
 
         arrayIndex = new int[36][36];
-        arrayIndex[12][15] = source;
+        arrayIndex[12][15] = SOURCE;
         for (int i = 13; i < 23 ; i++) {
-           arrayIndex[i][15] = conveyorRight;
+           arrayIndex[i][15] = CONVEYOR_RIGHT;
         }
-        arrayIndex[19][15] = nonswitchDown;
+        arrayIndex[19][15] = NONSWITCH_DOWN;
         for (int i = 16; i < 23; i++) {
-            arrayIndex[19][i] = conveyorDown;
+            arrayIndex[19][i] = CONVEYOR_DOWN;
         }
 
 
@@ -105,13 +101,13 @@ public class GamePlayScreen extends Screen {
 
     private int convertArrayIndex(int index) {
         switch (index){
-            case conveyorUp:
-            case conveyorDown:
+            case CONVEYOR_UP:
+            case CONVEYOR_DOWN:
                 return TYPE_Y_MID;
-            case conveyorRight:
-            case conveyorLeft:
+            case CONVEYOR_RIGHT:
+            case CONVEYOR_LEFT:
                 return TYPE_X_MID;
-            case nonswitchDown:
+            case NONSWITCH_DOWN:
             default:return 0;
         }
 

@@ -51,6 +51,7 @@ public class Box extends GameObject{
 
         }
         //check direction cua square
+
     }
 
     @Override

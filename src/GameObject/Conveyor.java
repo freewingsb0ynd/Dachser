@@ -33,4 +33,6 @@ public class Conveyor extends GameObject {
     public void draw(Graphics g) {
         //animation.draw(g,this.posX,this.posY);
     }
+
+
 }
