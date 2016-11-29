@@ -1,20 +1,22 @@
 package Screens;
 
+import CreateMapExtension.CreateMapManager;
 import CreateMapExtension.LogicPoint;
-import GameObject.Conveyor;
-import GameObject.ConveyorMoving;
-import Helper.AnimationHelper;
+import CreateMapExtension.MapCodeConst;
+import GameObject.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import static GameObject.Conveyor.*;
+import static CreateMapExtension.MapCodeConst.*;
+import static GameObject.ColorBox.*;
+import static GameObject.ConveyorMoving.*;
+import static GameObject.Direction.*;
 
 /**
  * Created by Hoangelato on 17/11/2016.
@@ -27,22 +29,48 @@ public class GamePlayScreen extends Screen {
 
     int arrayIndex[][];
 
-
+    Box box1;
     public GamePlayScreen() {
         loadBackground();
 
-        arrayIndex = new int[17][18];
+        arrayIndex = new int[36][36];
+        arrayIndex[12][15] = source;
+        for (int i = 13; i < 23 ; i++) {
+           arrayIndex[i][15] = conveyorRight;
+        }
+        arrayIndex[19][15] = nonswitchDown;
+        for (int i = 16; i < 23; i++) {
+            arrayIndex[19][i] = conveyorDown;
+        }
 
 
         conveyorList = new Vector<Conveyor>();
 
-        for (int x = 10; x < 11; x = x + 4) {
-            for (int y = 14; y < 15; y++) {
-                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
-                conveyorList.add(conveyor1);
+        for (int sum = 0; sum <= 60; sum++) {
+            for (int i = 0; i <= sum; i++) {
+                int j = sum - i;
+                if ((i <= 35) && (j <= 35)) {
+//                    System.out.println(" i:" + i + " j : " + j + "map : " + map[i][j]);
+                    LogicPoint lp = new LogicPoint(i, j);
+                    Point p = lp.convertToPoint();
+                    if (arrayIndex[i][j] != 0) {
+                        Point point = new LogicPoint(i,j).convertToPoint();
+                        conveyorList.add(new ConveyorMoving(point.x,point.y).getConveyorByType(convertArrayIndex(arrayIndex[i][j])));
+                    }
+                }
             }
-
         }
+
+
+
+//        for (int x = 10; x < 11; x = x + 4) {
+//            for (int y = 14; y < 15; y++) {
+//                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
+//                conveyorList.add(conveyor1);
+//            }
+//        }
+//
+//        box1 = new Box(new LogicPoint(18,18), WHITE);
 //        for (int x = -15; x < 17 ; x = x + 1) {
 //            //if (x % 4 == 0) continue;
 //            // for (int y = - (17 - x) ; y < (17 - x) ; y++) {
@@ -75,6 +103,20 @@ public class GamePlayScreen extends Screen {
 
     }
 
+    private int convertArrayIndex(int index) {
+        switch (index){
+            case conveyorUp:
+            case conveyorDown:
+                return TYPE_Y_MID;
+            case conveyorRight:
+            case conveyorLeft:
+                return TYPE_X_MID;
+            case nonswitchDown:
+            default:return 0;
+        }
+
+    }
+
     void loadBackground() {
         try {
             background = ImageIO.read(new File("resource/Image/background_4.png"));
@@ -89,7 +131,10 @@ public class GamePlayScreen extends Screen {
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.update();
         }
-
+//        box1.movebyDirection(UP);
+//        box1.movebyDirection(LEFT);
+//        box1.movebyDirection(DOWN);
+//        box1.movebyDirection(RIGHT);
     }
 
     @Override
@@ -98,6 +143,7 @@ public class GamePlayScreen extends Screen {
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
         }
+//        box1.draw(g);
     }
 
     @Override

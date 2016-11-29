@@ -10,7 +10,7 @@ import java.awt.*;
 public class ConveyorXEnd extends ConveyorMoving {
     public ConveyorXEnd(int posX, int posY) {
         super(posX, posY);
-        this.animation = new AnimationHelper("resource/conveyor/1_end/1_end(", 199, 4);
+        this.animation = new AnimationHelper("resource/conveyor/x_end/x_end(", 199, 4);
     }
 
     public void update() {
