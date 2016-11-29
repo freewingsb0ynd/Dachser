@@ -36,9 +36,9 @@ public class GamePlayScreen extends Screen {
 
         conveyorList = new Vector<Conveyor>();
 
-        for (int x = 16; x < 17; x = x + 4) {
-            for (int y = 17; y < 18; y++) {
-                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_X_MID);
+        for (int x = 10; x < 11; x = x + 4) {
+            for (int y = 14; y < 15; y++) {
+                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
                 conveyorList.add(conveyor1);
             }
 
