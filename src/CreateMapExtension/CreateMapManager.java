@@ -16,33 +16,66 @@ public class CreateMapManager {
         map = new int[36][36];
     }
 
-    //check keo tha
-    private boolean checkdragConveyorX(int[][] map, int x1, int x2, int y) {
-        for (int i = x1 + 1; i <= x2; i++) {
-            if (map[i][y] >= 13) {
-                return false;
-            }
-        }
-        for (int i = x1; i < x2; i++) {
-            if (map[i][y] != MapCodeConst.nothing && map[i + 1][y] != MapCodeConst.nothing) {
-                return false;
-            }
-        }
-        return true;
+    public int[][] getMap() {
+        return map;
     }
 
-    private boolean checkdragConveyorY(int[][] map, int x, int y1, int y2) {
-        for (int i = y1 + 1; i <= y2; i++) {
-            if (map[x][i] >= 13) {
-                return false;
+    //check keo tha
+    private boolean checkdragConveyor(int[][] map, int x1, int x2, int y1, int y2) {
+        if (y1 == y2) {
+            if (x1 < x2) {
+                for (int i = x1 + 1; i <= x2; i++) {
+                    if (map[i][y1] >= 13) {
+                        return false;
+                    }
+                }
+                for (int i = x1; i < x2; i++) {
+                    if (map[i][y1] != MapCodeConst.nothing && map[i + 1][y1] != MapCodeConst.nothing) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = x1 - 1; i >= x2; i--) {
+                    if (map[i][y1] >= 13) {
+                        return false;
+                    }
+                }
+                for (int i = x1; i > x2; i--) {
+                    if (map[i][y1] != MapCodeConst.nothing && map[i - 1][y1] != MapCodeConst.nothing) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } else {
+            if (y1 < y2) {
+                for (int i = y1 + 1; i <= y2; i++) {
+                    if (map[x1][i] >= 13) {
+                        return false;
+                    }
+                }
+                for (int i = y1; i < y2; i++) {
+                    if (map[x1][i] != MapCodeConst.nothing && map[x1][i + 1] != MapCodeConst.nothing) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = y1 - 1; i >= y2; i--) {
+                    if (map[x1][i] >= 13) {
+                        return false;
+                    }
+                }
+                for (int i = y1; i > y2; i--) {
+                    if (map[x1][i] != MapCodeConst.nothing && map[x1][i - 1] != MapCodeConst.nothing) {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
-        for (int i = y1; i < y2; i++) {
-            if (map[x][i] != MapCodeConst.nothing && map[x][i + 1] != MapCodeConst.nothing) {
-                return false;
-            }
-        }
-        return true;
+
     }
 
     //check thao tac de dua vao stack
@@ -51,8 +84,8 @@ public class CreateMapManager {
         int y1 = operation.getP1().getLogicY();
         int x2 = operation.getP2().getLogicX();
         int y2 = operation.getP2().getLogicY();
-        if (x1 < 0 || x2 < 0 || y1 < 0 || y2 < 0 || x1 > 35 || x2 > 35 || y1 > 35 || y2 > 35) {
-            return false;
+        if (operationStack.isEmpty()) {
+            return operation.getCode() == OperationConst.setSource;
         }
         switch (operation.getCode()) {
             case OperationConst.none:
@@ -60,19 +93,8 @@ public class CreateMapManager {
             case OperationConst.dragConveyor:
                 if (map[x1][y1] == 0 || map[x1][y1] > 17) {
                     return false;
-                }
-                if (y1 == y2) {
-                    if (x1 < x2) {
-                        return checkdragConveyorX(map, x1, x2, y1);
-                    } else {
-                        return checkdragConveyorX(map, x2, x1, y1);
-                    }
                 } else {
-                    if (y1 < y2) {
-                        return checkdragConveyorY(map, x1, y1, y2);
-                    } else {
-                        return checkdragConveyorY(map, x1, y2, y1);
-                    }
+                    return checkdragConveyor(map, x1, x2, y1, y2);
                 }
             case OperationConst.clickDelete:
                 return true;
@@ -84,17 +106,36 @@ public class CreateMapManager {
                 if (map[x1][y1] != MapCodeConst.nothing && map[x1][y1] <= 17) {
                     return false;
                 } else return true;
+            case OperationConst.setPlane:
+            case OperationConst.setShip:
+            case OperationConst.setTruck:
+                if (map[x1][y1] != MapCodeConst.nothing || map[x1 + 1][y1] != MapCodeConst.nothing
+                        || map[x1][y1 - 1] != MapCodeConst.nothing || map[x1 + 1][y1 - 1] != MapCodeConst.nothing) {
+                    return false;
+                }
+                if (map[x1][y1 + 1] == MapCodeConst.endUp || map[x1 + 1][y1 + 1] == MapCodeConst.endUp) {
+                    return true;
+                }
+                if (map[x1][y1 - 2] == MapCodeConst.endDown || map[x1 + 1][y1 - 2] == MapCodeConst.endDown) {
+                    return true;
+                }
+                if (map[x1 - 1][y1] == MapCodeConst.endRight || map[x1 - 1][y1 - 1] == MapCodeConst.endRight) {
+                    return true;
+                }
+                if (map[x1 + 2][y1] == MapCodeConst.endLeft || map[x1 + 2][y1 - 1] == MapCodeConst.endLeft) {
+                    return true;
+                }
+                return false;
+            case OperationConst.setSource:
+                return false;
+
             default:
-                if (map[x1][x2] != MapCodeConst.nothing) {
+                if (map[x1][y1] != MapCodeConst.nothing) {
                     return false;
                 } else return true;
 
         }
 
-    }
-
-    public int[][] getMap() {
-        return map;
     }
 
     private void executeDrag(Operation operation) {
@@ -105,7 +146,7 @@ public class CreateMapManager {
         if (y1 == y2) {
             if (x1 < x2) {
                 if (map[x1][y1] == MapCodeConst.source) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.conveyorRight;
+                    map[x1][y1] = MapCodeConst.source;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.nonswitchRight;
                 } else {
@@ -131,7 +172,7 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.source) {    //xet diem dau
-                    map[x1][y1] = MapCodeConst.conveyorLeft;
+                    map[x1][y1] = MapCodeConst.source;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.nonswitchLeft;
                 } else {
@@ -159,7 +200,7 @@ public class CreateMapManager {
         } else {
             if (y1 < y2) {
                 if (map[x1][y1] == MapCodeConst.source) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.conveyorDown;
+                    map[x1][y1] = MapCodeConst.source;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.nonswitchDown;
                 } else {
@@ -186,7 +227,7 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.source) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.conveyorUp;
+                    map[x1][y1] = MapCodeConst.source;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.nonswitchUp;
                 } else {
@@ -204,7 +245,7 @@ public class CreateMapManager {
                 }
 
                 if (map[x1][y2] == MapCodeConst.nothing) {  //xet diem cuoi
-                    map[x2][y1] = MapCodeConst.endUp;
+                    map[x1][y2] = MapCodeConst.endUp;
                 } else if (map[x1][y2] >= 1 && map[x1][y2] <= 4) {
                     map[x1][y2] += 8;
                 } else {
@@ -220,62 +261,55 @@ public class CreateMapManager {
         map = new int[36][36];
         Operation op;
         if (stack.empty()) {
-            return;}
+            return;
+        }
 
         for (int i = 0; i < stack.size(); i++) {
             op = stack.elementAt(i);
             this.newMapFromValidOperation(op);
         }
-        }
+    }
 
     private void newMapFromValidOperation(Operation operation) {
         //int[][] buffermap = new int[36][36];
         int code = operation.getCode();
         int x1 = operation.getP1().getLogicX();
         int y1 = operation.getP1().getLogicY();
-        int x2 = operation.getP2().getLogicX();
-        int y2 = operation.getP2().getLogicY();
+//        int x2 = operation.getP2().getLogicX();
+//        int y2 = operation.getP2().getLogicY();
         // sinh ra map tu map cu
-        if (operationStack == null) {
-            if (code != OperationConst.setSource) {
+        switch (code) {
+            case OperationConst.none:
                 return;
-            } else {
-                map[x1][y1] = MapCodeConst.source;
-            }
-        } else {
-            switch (code) {
-                case OperationConst.none:
-                    return;
-                case OperationConst.dragConveyor:
-                    executeDrag(operation);
-                    return;
-                case OperationConst.clickDelete:
-                    map = new int[36][36];
-                    return;
-                case OperationConst.clickEraser:
-                    map[x1][y1] = MapCodeConst.nothing;
-                    return;
-                case OperationConst.clickSave:
-                    //de sau lam
-                    return;
-                case OperationConst.clickUndo:
-                    try{
-                        operationStack.pop();
-                        this.executeUndo(operationStack);
-                    } catch (EmptyStackException e) {
+            case OperationConst.dragConveyor:
+                executeDrag(operation);
+                return;
+            case OperationConst.clickDelete:
+                map = new int[36][36];
+                return;
+            case OperationConst.clickEraser:
+                map[x1][y1] = MapCodeConst.nothing;
+                return;
+            case OperationConst.clickSave:
+                //de sau lam
+                return;
+            case OperationConst.clickUndo:
+                try {
+                    operationStack.pop();
+                    executeUndo(operationStack);
+                } catch (EmptyStackException e) {
 
-                    }
+                }
 
-                    return;
-                default:
-                    map[x1][y1] = code;
-                    return;
-            }
+                return;
+            default:
+                map[x1][y1] = code;
+                return;
         }
     }
 
     public void execute(Operation operation) {
-        if(checkValidOperation(operation) == true) {
+        if (checkValidOperation(operation) == true) {
             int code = operation.getCode();
             newMapFromValidOperation(operation);
             if (code != OperationConst.clickSave && code != OperationConst.clickUndo && code != OperationConst.none) {

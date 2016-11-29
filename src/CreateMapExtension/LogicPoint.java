@@ -8,8 +8,8 @@ import java.awt.*;
 public class LogicPoint {
     public static final int baseX = 578;
     public static final int baseY = -319;
-    public int logicX;
-    public int logicY;
+    private int logicX;
+    private int logicY;
 
     public static LogicPoint convertPointToLogicPoint(Point point) {
         int x = point.x;
