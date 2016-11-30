@@ -14,6 +14,9 @@ public abstract class GameObject {
 
     abstract void loadImage();
 
+    public void update() {
+    }
+
     public void draw(Graphics g){
         g.drawImage(sprite, posX, posY, null);
     }
