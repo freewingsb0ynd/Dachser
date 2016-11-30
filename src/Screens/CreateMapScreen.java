@@ -7,6 +7,8 @@ import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -254,6 +256,18 @@ public class CreateMapScreen extends Screens.Screen {
             }
 
             JFileChooser saveMap = new JFileChooser("resource/Map");
+            saveMap.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    String filename = f.getName();
+                    return filename.endsWith(".pam") || f.isDirectory();
+                }
+
+                @Override
+                public String getDescription() {
+                    return "Game Maps(*.pam)";
+                }
+            });
             int value = saveMap.showSaveDialog(this);
             if (value == JFileChooser.APPROVE_OPTION) {
                 File file = saveMap.getSelectedFile();
