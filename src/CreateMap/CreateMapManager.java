@@ -1,12 +1,7 @@
 package CreateMap;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.EmptyStackException;
 import java.util.Stack;
-import javax.swing.*;
 
 /**
  * Created by Nhat on 24/11/2016.
@@ -15,7 +10,8 @@ import javax.swing.*;
 public class CreateMapManager {
     private Stack<Operation> operationStack;
     private int[][] map;
-    private boolean existConveyorFromSource = false;
+    private boolean isExistConveyorFromSource = false;
+    private boolean isExistSource = false;
 
     public CreateMapManager() {
         operationStack = new Stack<>();
@@ -93,6 +89,7 @@ public class CreateMapManager {
         if (operationStack.isEmpty()) {
             return operation.getCode() == OperationConst.SET_SOURCE;
         }
+
         switch (operation.getCode()) {
             case OperationConst.NONE:
                 return true;
@@ -100,7 +97,7 @@ public class CreateMapManager {
                 if (map[x1][y1] == 0 || map[x1][y1] > 17) {
                     return false;
                 }
-                if (map[x1][y1] == MapCodeConst.SOURCE && existConveyorFromSource) {
+                if (map[x1][y1] == MapCodeConst.SOURCE && isExistConveyorFromSource) {
                     return false;
                 } else {
                     return checkdragConveyor(map, x1, x2, y1, y2);
@@ -136,7 +133,10 @@ public class CreateMapManager {
                 }
                 return false;
             case OperationConst.SET_SOURCE:
-                return false;
+                if (isExistSource) {
+                    return false;
+                }
+                return true;
 
             default:
                 return map[x1][y1] == MapCodeConst.NOTHING;
@@ -153,8 +153,10 @@ public class CreateMapManager {
         if (y1 == y2) {
             if (x1 < x2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    existConveyorFromSource = true;
-                } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
+                    isExistConveyorFromSource = true;
+                } else if (map[x1][y1] == MapCodeConst.END_RIGHT) {
+                    map[x1][y1] = MapCodeConst.CONVEYOR_RIGHT;
+                } else if (map[x1][y1] == MapCodeConst.END_DOWN || map[x1][y1] == MapCodeConst.END_UP) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_RIGHT;
                 } else {
                     map[x1][y1] = MapCodeConst.SWITCH_RIGHT;
@@ -179,8 +181,10 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {    //xet diem dau
-                    existConveyorFromSource = true;
-                } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
+                    isExistConveyorFromSource = true;
+                } else if (map[x1][y1] == MapCodeConst.END_LEFT) {
+                    map[x1][y1] = MapCodeConst.CONVEYOR_LEFT;
+                } else if (map[x1][y1] == MapCodeConst.END_DOWN || map[x1][y1] == MapCodeConst.END_UP) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_LEFT;
                 } else {
                     map[x1][y1] = MapCodeConst.SWITCH_LEFT;
@@ -207,8 +211,10 @@ public class CreateMapManager {
         } else {
             if (y1 < y2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    existConveyorFromSource = true;
-                } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
+                    isExistConveyorFromSource = true;
+                } else if (map[x1][y1] == MapCodeConst.END_DOWN) {
+                    map[x1][y1] = MapCodeConst.CONVEYOR_DOWN;
+                } else if (map[x1][y1] == MapCodeConst.END_LEFT || map[x1][y1] == MapCodeConst.END_RIGHT) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_DOWN;
                 } else {
                     map[x1][y1] = MapCodeConst.SWITCH_DOWN;
@@ -234,8 +240,10 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    existConveyorFromSource = true;
-                } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
+                    isExistConveyorFromSource = true;
+                } else if (map[x1][y1] == MapCodeConst.END_UP) {
+                    map[x1][y1] = MapCodeConst.CONVEYOR_UP;
+                } else if (map[x1][y1] == MapCodeConst.END_LEFT || map[x1][y1] == MapCodeConst.END_RIGHT) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_UP;
                 } else {
                     map[x1][y1] = MapCodeConst.SWITCH_UP;
@@ -266,7 +274,8 @@ public class CreateMapManager {
 
     private void executeUndo(Stack<Operation> stack) {
         map = new int[36][36];
-        existConveyorFromSource = false;
+        isExistConveyorFromSource = false;
+        isExistSource = false;
         Operation op;
         if (stack.empty()) {
             return;
@@ -328,6 +337,8 @@ public class CreateMapManager {
                 return;
             case OperationConst.CLICK_DELETE:
                 map = new int[36][36];
+                isExistSource = false;
+                isExistConveyorFromSource = false;
                 return;
             case OperationConst.CLICK_ERASER:
                 if (map[x1][y1] == MapCodeConst.FORBIDDEN) {
@@ -365,6 +376,10 @@ public class CreateMapManager {
                 }
 
                 return;
+            case OperationConst.SET_SOURCE:
+                map[x1][y1] = MapCodeConst.SOURCE;
+                isExistSource = true;
+                return;
 
             case OperationConst.SET_PLANE:
             case OperationConst.SET_SHIP:
@@ -372,6 +387,7 @@ public class CreateMapManager {
                 map[x1][y1] = code;
                 map[x1][y1 - 1] = map[x1 + 1][y1] = map[x1 + 1][y1 - 1] = MapCodeConst.FORBIDDEN;
                 return;
+
             default:
                 map[x1][y1] = code;
         }

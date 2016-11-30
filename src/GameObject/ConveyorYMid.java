@@ -10,7 +10,7 @@ import java.awt.*;
 public class ConveyorYMid extends ConveyorMoving{
     protected ConveyorYMid(int posX, int posY) {
         super(posX, posY);
-        super.animation = new AnimationHelper("resource/conveyor/y_mid1/y_mid1(", 199, 4);
+        super.animation = new AnimationHelper("resource/conveyor/y_mid/y_mid(", 199, 4);
     }
     public void update() {
         super.update();
