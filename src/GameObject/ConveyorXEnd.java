@@ -1,4 +1,4 @@
-package GamePlay.GameObject;
+package GameObject;
 
 import Helper.AnimationHelper;
 

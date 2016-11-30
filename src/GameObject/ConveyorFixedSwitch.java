@@ -1,4 +1,4 @@
-package GamePlay.GameObject;
+package GameObject;
 
 /**
  * Created by Hoangelato on 22/11/2016.

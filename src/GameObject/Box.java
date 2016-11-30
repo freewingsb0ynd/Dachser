@@ -1,4 +1,4 @@
-package GamePlay.GameObject;
+package GameObject;
 
 import CreateMap.LogicPoint;
 

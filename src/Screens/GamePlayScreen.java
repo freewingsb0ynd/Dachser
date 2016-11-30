@@ -1,6 +1,6 @@
 package Screens;
 
-import CreateMapExtension.LogicPoint;
+import CreateMap.LogicPoint;
 import GameObject.*;
 
 import javax.imageio.ImageIO;
@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import static CreateMapExtension.MapCodeConst.*;
+import static CreateMap.MapCodeConst.*;
 import static GameObject.ConveyorMoving.*;
 
 /**
@@ -33,7 +33,7 @@ public class GamePlayScreen extends Screen {
             arrayIndex[i][15] = CONVEYOR_RIGHT;
         }
         arrayIndex[23][15] = NONSWITCH_UP;
-        arrayIndex[19][15] = NONSWITCH_DOWN;
+        arrayIndex[19][15] = NONSWITCH_RIGHT;
         for (int i = 16; i < 23; i++) {
             arrayIndex[19][i] = CONVEYOR_DOWN;
         }
