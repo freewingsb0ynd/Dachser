@@ -11,12 +11,13 @@ import java.io.IOException;
  * Created by admin on 11/5/2016.
  */
 public class Box extends GameObject{
-    private Point p;
+    public Point p;
     private ColorBox color;
     private double speed;
 
     public Box(LogicPoint lp, ColorBox color) {
         p = lp.convertToPoint();
+        p = new Point(p.x-12+42,p.y-12+28);
 
         this.color = color;
         loadImage();
@@ -28,6 +29,18 @@ public class Box extends GameObject{
         speed = 0.05;
     }
 
+    public Box(int posX, int posY, ColorBox color) {
+        p = new Point(posX,posY);
+
+        this.color = color;
+        loadImage();
+//        try {
+//            this.sprite = ImageIO.read(new File("resource/play button/pink_box.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        speed = 0.05;
+    }
 //    public ColorBox getColor(){
 //        return color;
 //    }
@@ -52,6 +65,9 @@ public class Box extends GameObject{
         //check direction cua square
 
     }
+
+
+
 
     @Override
     public void draw(Graphics g) {
