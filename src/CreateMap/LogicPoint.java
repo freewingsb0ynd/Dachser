@@ -1,4 +1,4 @@
-package CreateMapExtension;
+package CreateMap;
 
 import java.awt.*;
 

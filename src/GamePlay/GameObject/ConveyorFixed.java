@@ -1,4 +1,4 @@
-package GameObject;
+package GamePlay.GameObject;
 
 import java.awt.*;
 

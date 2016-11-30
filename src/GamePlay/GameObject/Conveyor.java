@@ -1,6 +1,4 @@
-package GameObject;
-
-import Helper.AnimationHelper;
+package GamePlay.GameObject;
 
 import java.awt.*;
 

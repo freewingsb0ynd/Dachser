@@ -1,6 +1,4 @@
-package CreateMapExtension;
-
-import javax.sound.midi.Soundbank;
+package CreateMap;
 
 /**
  * Created by Admin on 11/24/2016.
@@ -8,6 +6,7 @@ import javax.sound.midi.Soundbank;
 // dinh nghia ma hoa ban do bang cac so
 public class MapCodeConst {
     // vung ko co gi
+    public static final int FORBIDDEN = 100;
     public static final int NOTHING = 0;
 
     // vung co bang chuyen di theo 1 huong

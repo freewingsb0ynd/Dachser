@@ -1,12 +1,11 @@
-package GameObject;
+package GamePlay.GameObject;
 
-import CreateMapExtension.LogicPoint;
+import CreateMap.LogicPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 
 /**
  * Created by admin on 11/5/2016.

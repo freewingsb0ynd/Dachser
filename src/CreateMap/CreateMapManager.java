@@ -1,4 +1,4 @@
-package CreateMapExtension;
+package CreateMap;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +17,7 @@ public class CreateMapManager {
     private int[][] map;
     private int time;
     private int numBox;
+    private boolean existConveyorFromSource = false;
 
     public CreateMapManager() {
         operationStack = new Stack<>();
@@ -100,6 +101,9 @@ public class CreateMapManager {
             case OperationConst.DRAG_CONVEYOR:
                 if (map[x1][y1] == 0 || map[x1][y1] > 17) {
                     return false;
+                }
+                if (map[x1][y1] == MapCodeConst.SOURCE && existConveyorFromSource) {
+                    return false;
                 } else {
                     return checkdragConveyor(map, x1, x2, y1, y2);
                 }
@@ -110,7 +114,7 @@ public class CreateMapManager {
             case OperationConst.CLICK_UNDO:
                 return true;
             case OperationConst.CLICK_ERASER:
-                if (map[x1][y1] != MapCodeConst.NOTHING && map[x1][y1] <= 17) {
+                if (map[x1][y1] <= 17) {
                     return false;
                 } else return true;
             case OperationConst.SET_PLANE:
@@ -153,7 +157,7 @@ public class CreateMapManager {
         if (y1 == y2) {
             if (x1 < x2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.SOURCE;
+                        existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_RIGHT;
                 } else {
@@ -179,7 +183,7 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {    //xet diem dau
-                    map[x1][y1] = MapCodeConst.SOURCE;
+                        existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_LEFT;
                 } else {
@@ -207,7 +211,7 @@ public class CreateMapManager {
         } else {
             if (y1 < y2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.SOURCE;
+                        existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_DOWN;
                 } else {
@@ -234,7 +238,7 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                    map[x1][y1] = MapCodeConst.SOURCE;
+                    existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_UP;
                 } else {
@@ -266,6 +270,7 @@ public class CreateMapManager {
 
     private void executeUndo(Stack<Operation> stack) {
         map = new int[36][36];
+        existConveyorFromSource = false;
         Operation op;
         if (stack.empty()) {
             return;
@@ -275,6 +280,37 @@ public class CreateMapManager {
             op = stack.elementAt(i);
             this.newMapFromValidOperation(op);
         }
+    }
+
+    private void executeSave() {
+        numBox = Integer.parseInt(JOptionPane.showInputDialog("Input number of boxes:"));
+        time = Integer.parseInt(JOptionPane.showInputDialog("Input time(seconds):"));
+        File file = new File("map1.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(time + "\r\n");
+            bw.write(numBox + "\r\n");
+            for (int i = 0; i < 36; i++) {
+                for (int j = 0; j < 36; j++) {
+                    bw.write(map[i][j] + ",");
+                }
+                bw.newLine();
+            }
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("abc");
+
     }
 
     private void newMapFromValidOperation(Operation operation) {
@@ -295,36 +331,29 @@ public class CreateMapManager {
                 map = new int[36][36];
                 return;
             case OperationConst.CLICK_ERASER:
+                if (map[x1][y1] == MapCodeConst.FORBIDDEN) {
+                    if (map[x1][y1 + 1] == MapCodeConst.TRUCK
+                            || map[x1][y1 + 1] == MapCodeConst.SHIP
+                            || map[x1][y1 + 1] == MapCodeConst.PLANE) {
+                        map[x1][y1] = map[x1 + 1][y1] = map[x1][y1 + 1] = map[x1 + 1][y1 + 1] = MapCodeConst.NOTHING;
+                    }if (map[x1 - 1][y1 + 1] == MapCodeConst.TRUCK
+                            || map[x1 - 1][y1 + 1] == MapCodeConst.SHIP
+                            || map[x1 - 1][y1 + 1] == MapCodeConst.PLANE) {
+                        map[x1][y1] = map[x1 - 1][y1] = map[x1][y1 + 1] = map[x1 - 1][y1 + 1] = MapCodeConst.NOTHING;
+                    }if (map[x1 - 1][y1] == MapCodeConst.TRUCK
+                            || map[x1 - 1][y1] == MapCodeConst.SHIP
+                            || map[x1 - 1][y1] == MapCodeConst.PLANE) {
+                        map[x1][y1] = map[x1 - 1][y1] = map[x1][y1 - 1] = map[x1 - 1][y1 - 1] = MapCodeConst.NOTHING;
+                    }
+                    return;
+                }
+                if(map[x1][y1] == MapCodeConst.NOTHING){
+                    return;
+                }
                 map[x1][y1] = MapCodeConst.NOTHING;
                 return;
             case OperationConst.CLICK_SAVE:
-                numBox = Integer.parseInt(JOptionPane.showInputDialog("Input number of boxes:"));
-                time = Integer.parseInt(JOptionPane.showInputDialog("Input time(seconds):"));
-                File file = new File("map1.txt");
-                if(!file.exists()){
-                    try {
-                        file.createNewFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(time+"\r\n");
-                    bw.write(numBox+"\r\n");
-                    for(int i = 0; i < 36; i++){
-                        for(int j = 0; j < 36; j++){
-                            bw.write(map[i][j]+",");
-                        }
-                        bw.newLine();
-                    }
-                    bw.close();
-
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-                System.out.println("abc");
+                executeSave();
                 return;
             case OperationConst.CLICK_UNDO:
                 try {
@@ -335,6 +364,14 @@ public class CreateMapManager {
                 }
 
                 return;
+            case OperationConst.SET_SOURCE:
+                map[x1][y1] = MapCodeConst.SOURCE;
+                return;
+            case OperationConst.SET_PLANE:
+            case OperationConst.SET_SHIP:
+            case OperationConst.SET_TRUCK:
+                map[x1][y1] = code;
+                map[x1][y1 - 1] = map[x1 + 1][y1] = map[x1 + 1][y1 - 1] = MapCodeConst.FORBIDDEN;
             default:
                 map[x1][y1] = code;
                 return;

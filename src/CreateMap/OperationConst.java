@@ -1,4 +1,4 @@
-package CreateMapExtension;
+package CreateMap;
 
 /**
  * Created by Admin on 11/24/2016.
