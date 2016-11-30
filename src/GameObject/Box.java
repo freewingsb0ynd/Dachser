@@ -1,6 +1,6 @@
 package GameObject;
 
-import CreateMap.LogicPoint;
+import Helper.LogicPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

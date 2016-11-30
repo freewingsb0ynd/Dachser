@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Admin on 11/13/2016.
  */
-public class MenuScreen extends Screen implements MouseListener {
+public class MenuScreen extends Screen {
     BufferedImage background, playImage, instructionImage, aboutImage, exitImage, createmapImage;
     Rectangle playRect, instructionRect, aboutRect, exitRect, createmapRect;
     GameWindow gameWindow;

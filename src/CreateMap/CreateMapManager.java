@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EmptyStackException;
 import java.util.Stack;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  * Created by Nhat on 24/11/2016.
@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 public class CreateMapManager {
     private Stack<Operation> operationStack;
     private int[][] map;
-    private int time;
-    private int numBox;
     private boolean existConveyorFromSource = false;
 
     public CreateMapManager() {
@@ -87,7 +85,7 @@ public class CreateMapManager {
     }
 
     //check thao tac de dua vao stack
-    public boolean checkValidOperation(Operation operation) {
+    private boolean checkValidOperation(Operation operation) {
         int x1 = operation.getP1().getLogicX();
         int y1 = operation.getP1().getLogicY();
         int x2 = operation.getP2().getLogicX();
@@ -141,9 +139,7 @@ public class CreateMapManager {
                 return false;
 
             default:
-                if (map[x1][y1] != MapCodeConst.NOTHING) {
-                    return false;
-                } else return true;
+                return map[x1][y1] == MapCodeConst.NOTHING;
 
         }
 
@@ -157,7 +153,7 @@ public class CreateMapManager {
         if (y1 == y2) {
             if (x1 < x2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                        existConveyorFromSource = true;
+                    existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_RIGHT;
                 } else {
@@ -183,7 +179,7 @@ public class CreateMapManager {
 
             } else {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {    //xet diem dau
-                        existConveyorFromSource = true;
+                    existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_LEFT;
                 } else {
@@ -211,7 +207,7 @@ public class CreateMapManager {
         } else {
             if (y1 < y2) {
                 if (map[x1][y1] == MapCodeConst.SOURCE) {   //xet diem dau
-                        existConveyorFromSource = true;
+                    existConveyorFromSource = true;
                 } else if (map[x1][y1] >= 13 && map[x1][y1] <= 16) {
                     map[x1][y1] = MapCodeConst.NONSWITCH_DOWN;
                 } else {
@@ -282,36 +278,39 @@ public class CreateMapManager {
         }
     }
 
-    private void executeSave() {
-        numBox = Integer.parseInt(JOptionPane.showInputDialog("Input number of boxes:"));
-        time = Integer.parseInt(JOptionPane.showInputDialog("Input time(seconds):"));
-        File file = new File("map1.txt");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(time + "\r\n");
-            bw.write(numBox + "\r\n");
-            for (int i = 0; i < 36; i++) {
-                for (int j = 0; j < 36; j++) {
-                    bw.write(map[i][j] + ",");
-                }
-                bw.newLine();
-            }
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("abc");
-
-    }
+//    private void executeSave() {
+//        int numBox = Integer.parseInt(JOptionPane.showInputDialog("Input number of boxes:"));
+//        int time = Integer.parseInt(JOptionPane.showInputDialog("Input time(seconds):"));
+//        JFileChooser saveFile = new JFileChooser("D:\\Nhat\\IT\\IntelliJ\\Dachser\\resource\\Map");
+//        int value = saveFile.showSaveDialog();
+//
+//        File file = new File("map1.txt");
+//        if (!file.exists()) {
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        try {
+//            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//            BufferedWriter bw = new BufferedWriter(fw);
+//            bw.write(time + "\r\n");
+//            bw.write(numBox + "\r\n");
+//            for (int i = 0; i < 36; i++) {
+//                for (int j = 0; j < 36; j++) {
+//                    bw.write(map[i][j] + ",");
+//                }
+//                bw.newLine();
+//            }
+//            bw.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("abc");
+//
+//    }
 
     private void newMapFromValidOperation(Operation operation) {
         //int[][] buffermap = new int[36][36];
@@ -336,56 +335,55 @@ public class CreateMapManager {
                             || map[x1][y1 + 1] == MapCodeConst.SHIP
                             || map[x1][y1 + 1] == MapCodeConst.PLANE) {
                         map[x1][y1] = map[x1 + 1][y1] = map[x1][y1 + 1] = map[x1 + 1][y1 + 1] = MapCodeConst.NOTHING;
-                    }if (map[x1 - 1][y1 + 1] == MapCodeConst.TRUCK
+                        return;
+                    }
+                    if (map[x1 - 1][y1 + 1] == MapCodeConst.TRUCK
                             || map[x1 - 1][y1 + 1] == MapCodeConst.SHIP
                             || map[x1 - 1][y1 + 1] == MapCodeConst.PLANE) {
                         map[x1][y1] = map[x1 - 1][y1] = map[x1][y1 + 1] = map[x1 - 1][y1 + 1] = MapCodeConst.NOTHING;
-                    }if (map[x1 - 1][y1] == MapCodeConst.TRUCK
+                        return;
+                    }
+                    if (map[x1 - 1][y1] == MapCodeConst.TRUCK
                             || map[x1 - 1][y1] == MapCodeConst.SHIP
                             || map[x1 - 1][y1] == MapCodeConst.PLANE) {
                         map[x1][y1] = map[x1 - 1][y1] = map[x1][y1 - 1] = map[x1 - 1][y1 - 1] = MapCodeConst.NOTHING;
+                        return;
                     }
+                } else {
+                    map[x1][y1] = MapCodeConst.NOTHING;
                     return;
                 }
-                if(map[x1][y1] == MapCodeConst.NOTHING){
-                    return;
-                }
-                map[x1][y1] = MapCodeConst.NOTHING;
-                return;
+
             case OperationConst.CLICK_SAVE:
-                executeSave();
                 return;
             case OperationConst.CLICK_UNDO:
                 try {
                     operationStack.pop();
                     executeUndo(operationStack);
                 } catch (EmptyStackException e) {
-
+                    e.printStackTrace();
                 }
 
                 return;
-            case OperationConst.SET_SOURCE:
-                map[x1][y1] = MapCodeConst.SOURCE;
-                return;
+
             case OperationConst.SET_PLANE:
             case OperationConst.SET_SHIP:
             case OperationConst.SET_TRUCK:
                 map[x1][y1] = code;
                 map[x1][y1 - 1] = map[x1 + 1][y1] = map[x1 + 1][y1 - 1] = MapCodeConst.FORBIDDEN;
+                return;
             default:
                 map[x1][y1] = code;
-                return;
         }
     }
 
     public void execute(Operation operation) {
-        if (checkValidOperation(operation) == true) {
+        if (checkValidOperation(operation)) {
             int code = operation.getCode();
             newMapFromValidOperation(operation);
             if (code != OperationConst.CLICK_SAVE && code != OperationConst.CLICK_UNDO && code != OperationConst.NONE) {
                 operationStack.push(operation);
             }
-            return;
         }
     }
 }

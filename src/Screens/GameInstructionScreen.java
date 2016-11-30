@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by Admin on 11/14/2016.
  */
-public class GameInstructionScreen extends Screens.Screen implements MouseListener {
+public class GameInstructionScreen extends Screens.Screen{
     GameWindow gameWindow;
     BufferedImage background;
     BufferedImage backButton, nextButton, homeButton;

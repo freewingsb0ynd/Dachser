@@ -7,6 +7,7 @@ import com.sun.glass.ui.Size;
 
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -27,6 +28,7 @@ public class GameWindow extends Frame implements Runnable{
         MenuScreen menuScreen = new MenuScreen(this);
         this.addMouseListener(menuScreen);
         GameManager.getInstance().getStackScreen().push(menuScreen);
+
     }
 
 

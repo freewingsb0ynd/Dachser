@@ -2,20 +2,20 @@ package Screens;
 
 import CreateMap.*;
 import Game.GameWindow;
+import Helper.LogicPoint;
 import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by Admin on 11/24/2016.
  */
-public class CreateMapScreen extends Screens.Screen implements MouseListener {
+public class CreateMapScreen extends Screens.Screen {
 
     //    private Stack<Operation> stack = new Stack<Operation>();
     private int status = OperationConst.NONE;
@@ -23,14 +23,14 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
     private LogicPoint finishDrag = new LogicPoint();
     GameWindow gameWindow;
     private BufferedImage background, sourceBtn, conveyorBtn, deleteBtn, eraseBtn,
-            planeBtn, saveBtn, shipBtn, truckBtn, undoBtn, waterBtn, roadBtn, treeBtn;
+            planeBtn, saveBtn, shipBtn, truckBtn, undoBtn, waterBtn, roadBtn, treeBtn, backBtn;
 
     private Rectangle backgroundRect, sourceRect, deleteRect, conveyorRect, eraseRect, planeRect,
-            saveRect, shipRect, truckRect, undoRect, waterRect, roadRect, treeRect;
+            saveRect, shipRect, truckRect, undoRect, waterRect, roadRect, treeRect, backRect;
 
     private BufferedImage[] imageInMap = new BufferedImage[30];
-    private BufferedImage cursorImage;
-    private Cursor cursor = Cursor.getDefaultCursor();
+//    private BufferedImage cursorImage;
+//    private Cursor cursor = Cursor.getDefaultCursor();
 
     private CreateMapManager createMapManager = new CreateMapManager();
     private final Point pointO = new Point(10, 30);
@@ -163,16 +163,16 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
     private void loadImageInMap() {
         try {
             imageInMap[MapCodeConst.NONSWITCH_DOWN]
-                = imageInMap[MapCodeConst.CONVEYOR_DOWN]
+                    = imageInMap[MapCodeConst.CONVEYOR_DOWN]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_down.png"));
             imageInMap[MapCodeConst.NONSWITCH_LEFT]
-                = imageInMap[MapCodeConst.CONVEYOR_LEFT]
+                    = imageInMap[MapCodeConst.CONVEYOR_LEFT]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_left.png"));
             imageInMap[MapCodeConst.NONSWITCH_RIGHT]
-                = imageInMap[MapCodeConst.CONVEYOR_RIGHT]
+                    = imageInMap[MapCodeConst.CONVEYOR_RIGHT]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_right.png"));
             imageInMap[MapCodeConst.NONSWITCH_UP]
-                = imageInMap[MapCodeConst.CONVEYOR_UP]
+                    = imageInMap[MapCodeConst.CONVEYOR_UP]
                     = ImageIO.read(new File("resource/Create map button/Map_nonswitch_up.png"));
 
             imageInMap[MapCodeConst.END_DOWN]
@@ -197,7 +197,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
             imageInMap[MapCodeConst.SOURCE] = ImageIO.read(new File("resource/Create map button/Map_source.png"));
 
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -244,8 +244,36 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
             return;
         }
         if (saveRect.contains(e.getX(), e.getY())) {
-            Operation op = new Operation(OperationConst.CLICK_SAVE, new LogicPoint(), new LogicPoint());
-            createMapManager.execute(op);
+            int numBox;
+            int time;
+            try {
+                numBox = Integer.parseInt(JOptionPane.showInputDialog(this, "Input number of boxes:"));
+                time = Integer.parseInt(JOptionPane.showInputDialog(this, "Input time(seconds):"));
+            } catch (NumberFormatException exeption) {
+                return;
+            }
+
+            JFileChooser saveMap = new JFileChooser("resource/Map");
+            int value = saveMap.showSaveDialog(this);
+            if (value == JFileChooser.APPROVE_OPTION) {
+                File file = saveMap.getSelectedFile();
+                FileWriter fileWriter = null;
+                try {
+                    fileWriter = new FileWriter(file);
+                    BufferedWriter writer = new BufferedWriter(fileWriter);
+                    writer.write(time + "\r\n");
+                    writer.write(numBox + "\r\n");
+                    for (int i = 0; i < 36; i++) {
+                        for (int j = 0; j < 36; j++) {
+                            writer.write(createMapManager.getMap()[i][j] + ",");
+                        }
+                        writer.newLine();
+                    }
+                    writer.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
             return;
         }
         if (waterRect.contains(e.getX(), e.getY())) {
@@ -299,7 +327,7 @@ public class CreateMapScreen extends Screens.Screen implements MouseListener {
                 // kiem tra xem finish va start co hop le:
 
                 if ((startDrag.getLogicX() == finishDrag.getLogicX())
-                        && (startDrag.getLogicY() == finishDrag.getLogicY())){
+                        && (startDrag.getLogicY() == finishDrag.getLogicY())) {
                     return;
                 }
 

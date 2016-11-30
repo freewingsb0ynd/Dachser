@@ -1,5 +1,7 @@
 package CreateMap;
 
+import Helper.LogicPoint;
+
 /**
  * Created by Admin on 11/24/2016.
  */
