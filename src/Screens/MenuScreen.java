@@ -83,7 +83,8 @@ public class MenuScreen extends Screen implements MouseListener {
         if (playRect.contains(e.getX(),e.getY())){
             // kich vao play
             GamePlayScreen GamePlayScreen = new GamePlayScreen();
-//            gameWindow.addMouseListener(GamePlayScreen);
+            gameWindow.removeMouseListener(this);
+            gameWindow.addMouseListener(GamePlayScreen);
             GameManager.getInstance().getStackScreen().push(GamePlayScreen);
         }
         if (createmapRect.contains(e.getX(), e.getY())){

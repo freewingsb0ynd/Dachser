@@ -21,8 +21,6 @@ public class GamePlayScreen extends Screen {
     BufferedImage background;
 
     Vector<Conveyor> conveyorList;
-    Conveyor conveyor1, conveyor2, conveyor3, conveyor4, conveyor5;
-
     int arrayIndex[][];
 
     Box box1;
@@ -31,12 +29,17 @@ public class GamePlayScreen extends Screen {
 
         arrayIndex = new int[36][36];
         arrayIndex[12][15] = SOURCE;
-        for (int i = 13; i < 23 ; i++) {
-           arrayIndex[i][15] = CONVEYOR_RIGHT;
+        for (int i = 13; i < 23; i++) {
+            arrayIndex[i][15] = CONVEYOR_RIGHT;
         }
+        arrayIndex[23][15] = NONSWITCH_UP;
         arrayIndex[19][15] = NONSWITCH_DOWN;
         for (int i = 16; i < 23; i++) {
             arrayIndex[19][i] = CONVEYOR_DOWN;
+        }
+        arrayIndex[19][19] = SWITCH_LEFT;
+        for (int i = 18; i > 14; i--) {
+            arrayIndex[i][19] = CONVEYOR_LEFT;
         }
 
 
@@ -50,52 +53,47 @@ public class GamePlayScreen extends Screen {
                     LogicPoint lp = new LogicPoint(i, j);
                     Point p = lp.convertToPoint();
                     if (arrayIndex[i][j] != 0) {
-                        Point point = new LogicPoint(i,j).convertToPoint();
-                        conveyorList.add(new ConveyorMoving(point.x,point.y).getConveyorByType(convertArrayIndex(arrayIndex[i][j])));
+                        Point point = new LogicPoint(i, j).convertToPoint();
+                        conveyorList.add(getConveyorFromCode(arrayIndex[i][j], point.x, point.y));
                     }
                 }
             }
         }
 
+    }
 
 
-//        for (int x = 10; x < 11; x = x + 4) {
-//            for (int y = 14; y < 15; y++) {
-//                conveyor1 = new ConveyorMoving(LogicPoint.baseX + 36 * (x - y), LogicPoint.baseY + 18 * (x + y)).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
-//                conveyorList.add(conveyor1);
-//            }
-//        }
-//
-//        box1 = new Box(new LogicPoint(18,18), WHITE);
-//        for (int x = -15; x < 17 ; x = x + 1) {
-//            //if (x % 4 == 0) continue;
-//            // for (int y = - (17 - x) ; y < (17 - x) ; y++) {
-//            conveyor1 = new ConveyorMoving( 571 + 36 * (x ), 312 + 18 * (x ) ).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
-//            conveyorList.add(conveyor1);
-//            // }
-//
-//        }
-//        Point
-/***
- conveyor1 = new ConveyorMoving(417,251).getConveyorByType(ConveyorMoving.TYPE_X_END);
-
- conveyor2 = new ConveyorMoving(417 +36, 251 -18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
-
- conveyor3 = new ConveyorMoving(92+38+38,90-18-18).getConveyorByType(ConveyorMoving.TYPE_X_MID);
-
- conveyor4 = new ConveyorMoving(92,90).getConveyorByType(ConveyorMoving.TYPE_Y_END);
-
- conveyor5 = new ConveyorMoving(92-38,90-18).getConveyorByType(ConveyorMoving.TYPE_Y_MID);
+    private Conveyor getConveyorFromCode(int index, int posX, int posY){
+        switch (index) {
+            case CONVEYOR_UP:
+            case CONVEYOR_RIGHT:
+            case CONVEYOR_LEFT:
+            case CONVEYOR_DOWN:
+                return new ConveyorMoving(posX, posY).getConveyorByType(convertArrayIndex(index));
+            case NONSWITCH_DOWN:
+            case NONSWITCH_LEFT:
+            case NONSWITCH_RIGHT:
+            case NONSWITCH_UP:
+                return new ConveyorFixedSwitch(posX,posY).getConveyorNonSwitchByDirection(convertFromMapCode(index));
 
 
- //        conveyorList.add(conveyor3);
- conveyorList.add(conveyor2);
- conveyorList.add(conveyor5);
- conveyorList.add(conveyor4);
- conveyorList.add(conveyor1);
+            default:
+                return new Conveyor(posX, posY);
+            }
 
-
- *///
+    };
+    private Direction convertFromMapCode(int mapCode){
+        switch (mapCode){
+            case NONSWITCH_DOWN:
+                return Direction.DOWN;
+            case NONSWITCH_LEFT:
+                return Direction.LEFT;
+            case NONSWITCH_RIGHT:
+                return Direction.RIGHT;
+            case NONSWITCH_UP:
+                return Direction.UP;
+            default: return Direction.NONE;
+        }
 
     }
 

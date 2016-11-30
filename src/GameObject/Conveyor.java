@@ -17,7 +17,7 @@ public class Conveyor extends GameObject {
     }
 
 
-    protected Conveyor(int posX, int posY) {
+    public Conveyor(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
     }
