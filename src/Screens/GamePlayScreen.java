@@ -2,9 +2,9 @@ package Screens;
 
 import Helper.LogicPoint;
 import CreateMap.MapCodeConst;
-import GamePlay.GameObject.Box;
-import GamePlay.GameObject.Conveyor;
-import GamePlay.GameObject.ConveyorMoving;
+import GameObject.Box;
+import GameObject.Conveyor;
+import GameObject.ConveyorMoving;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,8 +14,8 @@ import java.io.*;
 import java.util.Vector;
 
 import static CreateMap.MapCodeConst.*;
-import static GamePlay.GameObject.ConveyorMoving.TYPE_X_MID;
-import static GamePlay.GameObject.ConveyorMoving.TYPE_Y_MID;
+import static GameObject.ConveyorMoving.TYPE_X_MID;
+import static GameObject.ConveyorMoving.TYPE_Y_MID;
 
 /**
  * Created by Hoangelato on 17/11/2016.
@@ -35,7 +35,7 @@ public class GamePlayScreen extends Screen {
         arrayIndex = new int[36][36];
         try {
 
-            FileReader f = new FileReader("resource/Map/map2.pam");
+            FileReader f = new FileReader("resource/Map/map4.pam");
             BufferedReader reader = new BufferedReader(f);
             String line = reader.readLine();
             line = reader.readLine();
