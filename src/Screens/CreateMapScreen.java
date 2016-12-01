@@ -192,7 +192,7 @@ public class CreateMapScreen extends Screens.Screen {
             imageInMap[MapCodeConst.PLANE] = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
             imageInMap[MapCodeConst.SHIP] = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
 
-            imageInMap[MapCodeConst.TREE] = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
+            imageInMap[MapCodeConst.TREE] = ImageIO.read(new File("resource/Create map button/Map_tree.png"));
             imageInMap[MapCodeConst.WATER] = ImageIO.read(new File("resource/Create map button/Map_water.png"));
             imageInMap[MapCodeConst.ROAD] = ImageIO.read(new File("resource/Create map button/Map_road.png"));
 

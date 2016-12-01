@@ -47,8 +47,9 @@ public class GamePlayScreen extends Screen {
 //            conveyorSwitch.update();
 //        }
         System.out.println(gamePlayManager.box1.getDirection());
-        gamePlayManager.box1.movebyDirection();
         gamePlayManager.updateDirectionForBoxes();
+        gamePlayManager.box1.movebyDirection();
+
     }
 
 

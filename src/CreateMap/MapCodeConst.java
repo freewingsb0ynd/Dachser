@@ -45,7 +45,8 @@ public class MapCodeConst {
     public static final int TRUCK = 21;
     public static final int SHIP = 22;
     public static final int PLANE = 23;
-
+    public static final int TREE_1 = 24;
+    public static final int TREE_2 = 25;
 
 
 }

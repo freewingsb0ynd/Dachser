@@ -109,7 +109,13 @@ public class GamePlayManager {
     }
 
     public void updateDirectionForBoxes(){
-        box1.setDirection(getDirectionFromMapCode(map[box1.getLogicPoint().getLogicX()][box1.getLogicPoint().getLogicY()]));
+
+        System.out.println(box1.isAllowToMove);
+
+//        if (box1.isAllowToMove) {
+            box1.setDirection(getDirectionFromMapCode(map[box1.getLogicPoint().getLogicX()][box1.getLogicPoint().getLogicY()]));
+//        }
+//        box1.checkToMove();
     }
 
     public void getProbableDirectionForAllSwitches() {

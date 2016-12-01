@@ -11,10 +11,12 @@ import java.io.IOException;
  * Created by admin on 11/5/2016.
  */
 public class Box extends GameObject {
-    public Point p;
+    private double realX;
+    private double realY;
     private ColorBox color;
     private double speed;
-    private Direction direction;
+    public boolean isAllowToMove = true;
+    private Direction direction = Direction.NONE;
     private static final int offsetX = 12;
     private static final int offsetY = 48;
 
@@ -27,9 +29,10 @@ public class Box extends GameObject {
     }
 
     public Box(LogicPoint lp, ColorBox color) {
-        p = lp.convertToPoint();
+        Point p = lp.convertToPoint();
         p = new Point(p.x + 42 - 6 - 12, p.y + 62 - 3 - 48);
-
+        realX = posX = p.x;
+        realY = posY = p.y;
         this.color = color;
         loadImage();
 //        try {
@@ -37,11 +40,12 @@ public class Box extends GameObject {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        speed = 0.05;
+        speed = 0.01;
     }
 
-    public Box(int posX, int posY, ColorBox color) {
-        p = new Point(posX, posY);
+    public Box(int x, int y, ColorBox color) {
+        realX = posX = x;
+        realY = posY = y;
 
         this.color = color;
         loadImage();
@@ -50,63 +54,98 @@ public class Box extends GameObject {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        speed = 0.05;
+        speed = 0.02;
     }
 //    public ColorBox getColor(){
 //        return color;
 //    }
 
-    public boolean hasToCheckDirection() {
-        int x = p.x + offsetX;
-        int y = p.y + offsetY;
-        int xRaw, yRaw;
-        LogicPoint lp = LogicPoint.convertPointToLogicPoint(new Point(x, y));
-        LogicPoint lpRaw;
-        switch (direction) {
-            case UP:
-                xRaw = x + 36;
-                yRaw = y - 18;
-                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
-                return lp.getLogicY() == lpRaw.getLogicY();
-            case DOWN:
-                xRaw = x - 36;
-                yRaw = y + 18;
-                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
-                return lp.getLogicY() == lpRaw.getLogicY();
-            case LEFT:
-                xRaw = x - 36;
-                yRaw = y - 18;
-                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
-                return lp.getLogicX() == lpRaw.getLogicX();
-            case RIGHT:
-                xRaw = x + 36;
-                yRaw = y + 18;
-                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
-                return lp.getLogicX() == lpRaw.getLogicX();
-        }
-        return true;
+//    public boolean hasToCheckDirection() {
+//        int x = posX + offsetX;
+//        int y = posY + offsetY;
+//        int xRaw, yRaw;
+//        LogicPoint lp = LogicPoint.convertPointToLogicPoint(new Point(x, y));
+//        Point map = lp.convertToPoint();
+//        int midMapX = map.x + 42;
+//        int midMapY = map.y + 62;
+//        LogicPoint lpRaw;
+//        switch (direction) {
+//            case UP:
+//                return Math.abs(y - midMapY) < 3;
+////                xRaw = x + 18;
+////                yRaw = y - 9;
+////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+////                return lp.getLogicY() == lpRaw.getLogicY();
+//
+//            case DOWN:
+//                return Math.abs(y - midMapY) < 3;
+////                xRaw = x - 18;
+////                yRaw = y + 9;
+////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+////                return lp.getLogicY() == lpRaw.getLogicY();
+//            case LEFT:
+//                return Math.abs(x - midMapX) < 3;
+////                xRaw = x - 18;
+////                yRaw = y - 9;
+////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+////                return lp.getLogicX() == lpRaw.getLogicX();
+//            case RIGHT:
+//                return Math.abs(x - midMapX) < 3;
+////                xRaw = x + 18;
+////                yRaw = y + 9;
+////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+////                return lp.getLogicX() == lpRaw.getLogicX();
+//            case NONE:
+//                break;
+//        }
+//        return false;
+//    }
+
+    public LogicPoint getLogicPoint() {
+        return LogicPoint.convertPointToLogicPoint(new Point(posX + 12, posY + 48));
     }
 
-    public LogicPoint getLogicPoint(){
-        return LogicPoint.convertPointToLogicPoint(new Point(posX,posY));
-    }
+//    public void checkToMove() {
+//        LogicPoint logicMap = this.getLogicPoint();
+//        int midLogicMapX = logicMap.getLogicX() + 42;
+//        int midLogicMapY = logicMap.getLogicY() + 62;
+//        int x = posX + offsetX;
+//        int y = posY + offsetY;
+//        if ((x - midLogicMapX) * (x - midLogicMapX) + (y - midLogicMapY) * (y - midLogicMapY) < 5000) {
+//            isAllowToMove = true;
+//        } else isAllowToMove = false;
+//    }
 
     public void movebyDirection() {
+        Point p = new Point(posX, posY);
+        double newRealX = realX, newRealY = realY;
         switch (direction) {
             case UP:
-                p.setLocation(p.getX() + 36 * speed, p.getY() - 18 * speed);
+                newRealX = realX + 36 * speed;
+                newRealY = realY - 18 * speed;
+                p.setLocation(newRealX, newRealY);
                 break;
             case DOWN:
-                p.setLocation(p.getX() - 36 * speed, p.getY() + 18 * speed);
+                newRealX = realX - 36 * speed;
+                newRealY = realY + 18 * speed;
+                p.setLocation(newRealX, newRealY);
                 break;
             case LEFT:
-                p.setLocation(p.getX() - 36 * speed, p.getY() - 18 * speed);
+                newRealX = realX - 36 * speed;
+                newRealY = realY - 18 * speed;
+                p.setLocation(newRealX, newRealY);
                 break;
             case RIGHT:
-                p.setLocation(p.getX() + 36 * speed, p.getY() + 18 * speed);
+                newRealX = realX + 36 * speed;
+                newRealY = realY + 18 * speed;
+                p.setLocation(newRealX, newRealY);
                 break;
 
         }
+        this.posX = p.x;
+        this.posY = p.y;
+        realX = newRealX;
+        realY = newRealY;
 
     }
 
@@ -114,13 +153,13 @@ public class Box extends GameObject {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        g.drawImage(sprite, p.x, p.y, null);
+        g.drawImage(sprite, posX, posY, null);
     }
 
     @Override
     public void update() {
         super.update();
-        if (hasToCheckDirection()) {
+        if (isAllowToMove) {
             changeDirection();
         }
     }
