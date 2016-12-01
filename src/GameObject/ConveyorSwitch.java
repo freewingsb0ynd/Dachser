@@ -114,7 +114,7 @@ public class ConveyorSwitch extends ConveyorFixed {
                 probableDirections) {
             if (direction != d) {
                 direction = d;
-
+                loadSpriteByDirection(d);
                 return;
             } else continue;
         }

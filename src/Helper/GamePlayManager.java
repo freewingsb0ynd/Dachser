@@ -102,12 +102,12 @@ public class GamePlayManager {
     }
 
     public void getProbableDirectionForAllSwitches() {
-        for (ConveyorSwitch conveyorSwitch: conveyorSwitchList){
+        for (ConveyorSwitch conveyorSwitch : conveyorSwitchList) {
             getProbableDirection(conveyorSwitch);
         }
     }
 
-    void getProbableDirection(ConveyorSwitch conveyorSwitch){
+    void getProbableDirection(ConveyorSwitch conveyorSwitch) {
         ArrayList<Direction> returnList = new ArrayList<Direction>();
 
         int logicX = conveyorSwitch.getLogicPoint().getLogicX();
@@ -116,23 +116,21 @@ public class GamePlayManager {
         boolean[] isValidDirection = new boolean[4];
 
         int[] neighborsMapCode = new int[4];
-        neighborsMapCode[0]= map[logicX][logicY-1];
-        neighborsMapCode[1]= map[logicX+1][logicY];
-        neighborsMapCode[2]= map[logicX][logicY+1];
-        neighborsMapCode[3]= map[logicX-1][logicY];
+        neighborsMapCode[0] = map[logicX][logicY - 1];
+        neighborsMapCode[1] = map[logicX + 1][logicY];
+        neighborsMapCode[2] = map[logicX][logicY + 1];
+        neighborsMapCode[3] = map[logicX - 1][logicY];
 
-        for (int i=0; i<4; ++i){
-            if (neighborsMapCode[i] >= 17 || neighborsMapCode[i] == MapCodeConst.NOTHING){
+        for (int i = 0; i < 4; ++i) {
+            if (getDirectionFromMapCode(neighborsMapCode[i]) == Direction.NONE) {
                 isValidDirection[i] = false;
-            } else if(neighborsMapCode[i] >= 5 && neighborsMapCode[i] <= 16) {
-                 isValidDirection[i] = true;
-            } else if (getDirectionFromMapCode(neighborsMapCode[i]) != Conveyor.convertIndexToDirection(i)) {
+            } else if (getDirectionFromMapCode(neighborsMapCode[i]) == Conveyor.convertIndexToDirection((i + 2) % 4)) {
                 isValidDirection[i] = false;
             } else isValidDirection[i] = true;
         }
 
         for (int i = 0; i < 4; i++) {
-            if (isValidDirection[i]){
+            if (isValidDirection[i]) {
                 returnList.add(Conveyor.convertIndexToDirection(i));
             }
         }
@@ -173,25 +171,28 @@ public class GamePlayManager {
             case NONSWITCH_DOWN:
             case SWITCH_DOWN:
             case CONVEYOR_DOWN:
+            case END_DOWN:
                 return Direction.DOWN;
             case NONSWITCH_LEFT:
             case SWITCH_LEFT:
             case CONVEYOR_LEFT:
+            case END_LEFT:
                 return Direction.LEFT;
             case NONSWITCH_RIGHT:
             case SWITCH_RIGHT:
             case CONVEYOR_RIGHT:
+            case END_RIGHT:
                 return Direction.RIGHT;
             case NONSWITCH_UP:
             case SWITCH_UP:
             case CONVEYOR_UP:
+            case END_UP:
                 return Direction.UP;
             default:
                 return Direction.NONE;
         }
 
     }
-
 
 
     private int getConveyorTypeFromMapcode(int mapCode) {
