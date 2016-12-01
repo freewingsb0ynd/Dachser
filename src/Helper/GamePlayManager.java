@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import static CreateMap.MapCodeConst.*;
+import static GameObject.ColorBox.*;
 import static GameObject.ConveyorMoving.TYPE_X_MID;
 
 /**
@@ -21,6 +22,8 @@ public class GamePlayManager {
     public Vector<Conveyor> conveyorList;
     public Vector<ConveyorSwitch> conveyorSwitchList;
     public int map[][];
+    public Vector<Box> boxList;
+    public Box box1;
 
     public GamePlayManager() {
         loadMap();
@@ -99,6 +102,14 @@ public class GamePlayManager {
 
         getProbableDirectionForAllSwitches();
 
+        box1 = new Box(new LogicPoint(11,15),PINK);
+        updateDirectionForBoxes();
+
+        System.out.println(getDirectionFromMapCode(map[11][15]));
+    }
+
+    public void updateDirectionForBoxes(){
+        box1.setDirection(getDirectionFromMapCode(map[box1.getLogicPoint().getLogicX()][box1.getLogicPoint().getLogicY()]));
     }
 
     public void getProbableDirectionForAllSwitches() {
@@ -136,7 +147,7 @@ public class GamePlayManager {
         }
 
         conveyorSwitch.probableDirections = returnList;
-        System.out.println(returnList);
+        //System.out.println(returnList);
     }
 
     private boolean isSwitch(Conveyor c) {

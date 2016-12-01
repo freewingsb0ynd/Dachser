@@ -14,9 +14,17 @@ public class Box extends GameObject {
     public Point p;
     private ColorBox color;
     private double speed;
-    private Direction d;
+    private Direction direction;
     private static final int offsetX = 12;
     private static final int offsetY = 48;
+
+    public void setDirection(Direction d) {
+        this.direction = d;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
 
     public Box(LogicPoint lp, ColorBox color) {
         p = lp.convertToPoint();
@@ -54,7 +62,7 @@ public class Box extends GameObject {
         int xRaw, yRaw;
         LogicPoint lp = LogicPoint.convertPointToLogicPoint(new Point(x, y));
         LogicPoint lpRaw;
-        switch (d) {
+        switch (direction) {
             case UP:
                 xRaw = x + 36;
                 yRaw = y - 18;
@@ -79,8 +87,12 @@ public class Box extends GameObject {
         return true;
     }
 
+    public LogicPoint getLogicPoint(){
+        return LogicPoint.convertPointToLogicPoint(new Point(posX,posY));
+    }
+
     public void movebyDirection() {
-        switch (d) {
+        switch (direction) {
             case UP:
                 p.setLocation(p.getX() + 36 * speed, p.getY() - 18 * speed);
                 break;

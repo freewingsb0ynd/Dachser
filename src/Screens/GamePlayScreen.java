@@ -46,8 +46,9 @@ public class GamePlayScreen extends Screen {
 //        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
 //            conveyorSwitch.update();
 //        }
-
-//        box1.movebyDirection(RIGHT);
+        System.out.println(gamePlayManager.box1.getDirection());
+        gamePlayManager.box1.movebyDirection();
+        gamePlayManager.updateDirectionForBoxes();
     }
 
 
@@ -59,7 +60,7 @@ public class GamePlayScreen extends Screen {
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
         }
-//        box1.draw(g);
+        gamePlayManager.box1.draw(g);
     }
 
     @Override
@@ -70,10 +71,11 @@ public class GamePlayScreen extends Screen {
 //        LogicPoint f = LogicPoint.convertPointToLogicPoint(e.getPoint());
 //        System.out.println("logic p =" + f.getLogicX() + "," + f.getLogicY());
 //
-        gamePlayManager.getProbableDirectionForAllSwitches();
+
 
         for (ConveyorSwitch conveyorSwitch: gamePlayManager.conveyorSwitchList){
             if (conveyorSwitch.clickArea.contains(pointClicked)) {
+                gamePlayManager.getProbableDirectionForAllSwitches();
                 conveyorSwitch.changeDirection();
             }
 
