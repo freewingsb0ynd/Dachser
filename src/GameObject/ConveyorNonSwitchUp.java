@@ -7,8 +7,8 @@ import java.io.IOException;
 /**
  * Created by Hoangelato on 28/11/2016.
  */
-public class ConveyorSwitchRight extends ConveyorSwitch {
-    protected ConveyorSwitchRight(int posX, int posY) {
+public class ConveyorNonSwitchUp extends ConveyorNonSwitch {
+    protected ConveyorNonSwitchUp(int posX, int posY) {
         super(posX, posY);
         loadImage();
     }
@@ -17,7 +17,7 @@ public class ConveyorSwitchRight extends ConveyorSwitch {
     public void loadImage() {
         super.loadImage();
         try {
-            this.sprite = ImageIO.read(new File("resource/conveyor/intermediate/1_nonswitch_right.png"));
+            this.sprite = ImageIO.read(new File("resource/conveyor/x_nonswitch/x_nonswitch_up.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
