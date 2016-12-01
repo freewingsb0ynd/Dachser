@@ -4,21 +4,24 @@ import Helper.LogicPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static GameObject.Direction.*;
+
+
 /**
  * Created by Hoangelato on 22/11/2016.
  */
 public class ConveyorSwitch extends ConveyorFixed {
-    Direction createdDirection = Direction.NONE;
+    Direction direction = NONE;
     ArrayList<BufferedImage> sprites;
+    private LogicPoint logicPoint;
     BufferedImage spriteUp, spriteDown, spriteLeft, spriteRight;
     public Rectangle clickArea = new Rectangle();
+    public ArrayList<Direction> probableDirections = new ArrayList<Direction>();
 
     protected ConveyorSwitch(int posX, int posY) {
         super(posX, posY);
@@ -26,16 +29,31 @@ public class ConveyorSwitch extends ConveyorFixed {
     }
 
     public ConveyorSwitch(LogicPoint logicPoint, Direction direction) {
-        super(logicPoint.convertToPoint().x,logicPoint.convertToPoint().y);
-        this.createdDirection = direction;
+        super(logicPoint.convertToPoint().x, logicPoint.convertToPoint().y);
+        this.direction = direction;
     }
 
     public ConveyorSwitch(int posX, int posY, Direction direction) {
-        super(posX,posY);
-        this.createdDirection = direction;
-        clickArea = new Rectangle(posX+24,posY+32-9,36,18);
+        super(posX, posY);
+        this.logicPoint = LogicPoint.convertPointToLogicPoint(new Point(posX, posY));
+        this.direction = direction;
+//
+//        initArrayDirection();
+        clickArea = new Rectangle(posX + 24, posY + 32 - 9, 36, 18);
         loadImage();
     }
+
+//    private void initArrayDirection() {
+//        clockWiseDirection.add(UP);
+//        clockWiseDirection.add(RIGHT);
+//        clockWiseDirection.add(DOWN);
+//        clockWiseDirection.add(LEFT);
+//    }
+
+    public LogicPoint getLogicPoint() {
+        return logicPoint;
+    }
+
 
     @Override
     public void loadImage() {
@@ -56,13 +74,14 @@ public class ConveyorSwitch extends ConveyorFixed {
         sprites.add(spriteDown);
         sprites.add(spriteLeft);
 
-        loadSpriteByDirection(this.createdDirection);
+        loadSpriteByDirection(this.direction);
 
 
     }
 
+
     private void loadSpriteByDirection(Direction d) {
-        switch (d){
+        switch (d) {
             case UP:
                 sprite = sprites.get(0);
                 break;
@@ -76,21 +95,26 @@ public class ConveyorSwitch extends ConveyorFixed {
                 sprite = sprites.get(3);
                 break;
 
-            default:break;
+            default:
+                break;
         }
     }
 
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        g.drawRect(posX+24,posY+32-9,36,18);
+        g.drawRect(posX + 24, posY + 32 - 9, 36, 18);
     }
 
 
     int index;
 
     public void changeDirection() {
-        sprite = sprites.get((sprites.indexOf(sprite)+1)%4);
+        sprite = sprites.get((probableDirections.indexOf(sprite) + 1) % probableDirections.size());
+    }
+
+    private void checkNextDirection() {
+
     }
 
 }

@@ -1,5 +1,6 @@
 package Helper;
 
+import CreateMap.MapCodeConst;
 import GameObject.*;
 
 import java.awt.*;
@@ -7,11 +8,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import static CreateMap.MapCodeConst.*;
 import static GameObject.ConveyorMoving.TYPE_X_MID;
 import static GameObject.ConveyorMoving.TYPE_Y_MID;
+import static GameObject.Direction.NONE;
 import static GameObject.Direction.UP;
 
 /**
@@ -27,7 +30,7 @@ public class GamePlayManager {
 
     }
 
-    public void update(){
+    public void update() {
 
     }
 
@@ -87,30 +90,73 @@ public class GamePlayManager {
                     if (map[i][j] != 0 && map[i][j] != 100) {
 //                        if(isSwitch())
 //                            addConveyorFromCode(map[i][j], point.x, point.y);
-                        Conveyor conveyorToAdd = getConveyorFromCode(map[i][j], point.x, point.y);
-                        if(isSwitch(conveyorToAdd)) conveyorSwitchList.add((ConveyorSwitch) conveyorToAdd);
+                        Conveyor conveyorToAdd = getConveyorFromMapCode(map[i][j], point.x, point.y);
+                        if (isSwitch(conveyorToAdd)) conveyorSwitchList.add((ConveyorSwitch) conveyorToAdd);
                         conveyorList.add(conveyorToAdd);
 
-                        //conveyorList.add(getConveyorFromCode(map[i][j], point.x, point.y));
+                        //conveyorList.add(getConveyorFromMapCode(map[i][j], point.x, point.y));
                     }
                 }
             }
         }
+
+        getProbableDirectionForAllSwitches();
+
     }
 
-    private boolean isSwitch(Conveyor c){
+    public void getProbableDirectionForAllSwitches() {
+        for (ConveyorSwitch conveyorSwitch: conveyorSwitchList){
+            getProbableDirection(conveyorSwitch);
+        }
+    }
+
+    void getProbableDirection(ConveyorSwitch conveyorSwitch){
+        ArrayList<Direction> returnList = new ArrayList<Direction>();
+
+        int logicX = conveyorSwitch.getLogicPoint().getLogicX();
+        int logicY = conveyorSwitch.getLogicPoint().getLogicY();
+
+        boolean isValidDirection[] = new boolean[4];
+
+        int neighborsMapCode[] = new int[4];
+        neighborsMapCode[0]= map[logicX][logicY-1];
+        neighborsMapCode[1]= map[logicX+1][logicY];
+        neighborsMapCode[2]= map[logicX][logicY+1];
+        neighborsMapCode[3]= map[logicX-1][logicY];
+
+        for (int i=0; i<4; ++i){
+            if (neighborsMapCode[i] >= 17 || neighborsMapCode[i] == MapCodeConst.NOTHING){
+                isValidDirection[i] = false;
+            } else if(neighborsMapCode[i] >= 5 && neighborsMapCode[i] <= 16) {
+                 isValidDirection[i] = true;
+            } else if (getDirectionFromMapCode(neighborsMapCode[i]) != Conveyor.convertIndextoDirection(i)) {
+                isValidDirection[i] = false;
+            } else isValidDirection[i] = true;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            if (isValidDirection[i]){
+                returnList.add(Conveyor.convertIndextoDirection(i));
+            }
+        }
+
+        conveyorSwitch.probableDirections = returnList;
+        System.out.println(returnList);
+    }
+
+    private boolean isSwitch(Conveyor c) {
         if (c instanceof ConveyorSwitch) return true;
         return false;
     }
 
 
-    private Conveyor getConveyorFromCode(int mapCode, int posX, int posY) {
+    private Conveyor getConveyorFromMapCode(int mapCode, int posX, int posY) {
         switch (mapCode) {
             case CONVEYOR_UP:
             case CONVEYOR_RIGHT:
             case CONVEYOR_LEFT:
             case CONVEYOR_DOWN:
-                return new ConveyorMoving(posX, posY).getConveyorByType(convertArrayIndex(mapCode));
+                return new ConveyorMoving(posX, posY).getConveyorByType(getConveyorTypeFromMapcode(mapCode));
             case NONSWITCH_DOWN:
             case NONSWITCH_LEFT:
             case NONSWITCH_RIGHT:
@@ -120,13 +166,13 @@ public class GamePlayManager {
             case SWITCH_LEFT:
             case SWITCH_UP:
             case SWITCH_RIGHT:
-                return new ConveyorSwitch(posX,posY,getDirectionFromMapCode(mapCode));
+                return new ConveyorSwitch(posX, posY, getDirectionFromMapCode(mapCode));
         }
-        return new Conveyor(posX,posY);
+        return new Conveyor(posX, posY);
     }
 
-    private Direction getDirectionFromMapCode(int mapCode){
-        switch (mapCode){
+    public Direction getDirectionFromMapCode(int mapCode) {
+        switch (mapCode) {
             case NONSWITCH_DOWN:
             case SWITCH_DOWN:
             case CONVEYOR_DOWN:
@@ -143,24 +189,26 @@ public class GamePlayManager {
             case SWITCH_UP:
             case CONVEYOR_UP:
                 return UP;
-            default: return Direction.NONE;
+            default:
+                return Direction.NONE;
         }
 
     }
 
-    private int convertArrayIndex(int index) {
-        switch (index){
+
+
+    private int getConveyorTypeFromMapcode(int mapCode) {
+        switch (mapCode) {
             case CONVEYOR_UP:
             case CONVEYOR_DOWN:
-                return TYPE_Y_MID;
+                return ConveyorMoving.TYPE_Y_MID;
             case CONVEYOR_RIGHT:
             case CONVEYOR_LEFT:
                 return TYPE_X_MID;
-            case NONSWITCH_DOWN:
-            default:return 0;
+            default:
+                return 0;
         }
     }
-
 
 
 }

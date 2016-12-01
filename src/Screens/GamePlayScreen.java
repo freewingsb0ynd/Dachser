@@ -1,21 +1,16 @@
 package Screens;
 
-import GameObject.*;
+import GameObject.Conveyor;
+import GameObject.ConveyorSwitch;
 import Helper.GamePlayManager;
-import Helper.LogicPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
-
-import static CreateMap.MapCodeConst.*;
-import static GameObject.ColorBox.*;
-import static GameObject.ConveyorMoving.TYPE_X_MID;
-import static GameObject.ConveyorMoving.TYPE_Y_MID;
-import static GameObject.Direction.*;
 
 /**
  * Created by Hoangelato on 17/11/2016.
@@ -75,9 +70,13 @@ public class GamePlayScreen extends Screen {
 //        LogicPoint f = LogicPoint.convertPointToLogicPoint(e.getPoint());
 //        System.out.println("logic p =" + f.getLogicX() + "," + f.getLogicY());
 //
+        gamePlayManager.getProbableDirectionForAllSwitches();
+
         for (ConveyorSwitch conveyorSwitch: gamePlayManager.conveyorSwitchList){
-            if (conveyorSwitch.clickArea.contains(pointClicked))
+            if (conveyorSwitch.clickArea.contains(pointClicked)) {
                 conveyorSwitch.changeDirection();
+            }
+
         }
     }
 

@@ -106,6 +106,18 @@ public class Box extends GameObject {
     }
 
     @Override
+    public void update() {
+        super.update();
+        if (hasToCheckDirection()) {
+            changeDirection();
+        }
+    }
+
+    private void changeDirection() {
+
+    }
+
+    @Override
     void loadImage() {
         loadImageByColor(this.color);
     }

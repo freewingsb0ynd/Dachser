@@ -7,7 +7,21 @@ import java.awt.*;
  */
 public class Conveyor extends GameObject {
 
+    public static Direction convertIndextoDirection(int index) {
+        switch (index) {
+            case 0:
+                return Direction.UP;
+            case 1:
+                return Direction.RIGHT;
+            case 2:
+                return Direction.DOWN;
+            case 3:
+                return Direction.LEFT;
+            default:
+                return Direction.NONE;
+        }
 
+    }
 
 
     @Override
