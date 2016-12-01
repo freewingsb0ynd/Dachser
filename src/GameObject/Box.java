@@ -10,14 +10,17 @@ import java.io.IOException;
 /**
  * Created by admin on 11/5/2016.
  */
-public class Box extends GameObject{
+public class Box extends GameObject {
     public Point p;
     private ColorBox color;
     private double speed;
+    private Direction d;
+    private static final int offsetX = 12;
+    private static final int offsetY = 48;
 
     public Box(LogicPoint lp, ColorBox color) {
         p = lp.convertToPoint();
-        p = new Point(p.x-12+42,p.y-12+28);
+        p = new Point(p.x + 42 - 6 - 12, p.y + 62 - 3 - 48);
 
         this.color = color;
         loadImage();
@@ -30,7 +33,7 @@ public class Box extends GameObject{
     }
 
     public Box(int posX, int posY, ColorBox color) {
-        p = new Point(posX,posY);
+        p = new Point(posX, posY);
 
         this.color = color;
         loadImage();
@@ -45,34 +48,61 @@ public class Box extends GameObject{
 //        return color;
 //    }
 
-
-    public void movebyDirection(Direction d){
-        switch (d){
+    public boolean hasToCheckDirection() {
+        int x = p.x + offsetX;
+        int y = p.y + offsetY;
+        int xRaw, yRaw;
+        LogicPoint lp = LogicPoint.convertPointToLogicPoint(new Point(x, y));
+        LogicPoint lpRaw;
+        switch (d) {
             case UP:
-                p.setLocation(p.getX()+36*speed,p.getY()-18*speed);
+                xRaw = x + 36;
+                yRaw = y - 18;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
+                return lp.getLogicY() == lpRaw.getLogicY();
+            case DOWN:
+                xRaw = x - 36;
+                yRaw = y + 18;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
+                return lp.getLogicY() == lpRaw.getLogicY();
+            case LEFT:
+                xRaw = x - 36;
+                yRaw = y - 18;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
+                return lp.getLogicX() == lpRaw.getLogicX();
+            case RIGHT:
+                xRaw = x + 36;
+                yRaw = y + 18;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw,yRaw));
+                return lp.getLogicX() == lpRaw.getLogicX();
+        }
+        return true;
+    }
+
+    public void movebyDirection() {
+        switch (d) {
+            case UP:
+                p.setLocation(p.getX() + 36 * speed, p.getY() - 18 * speed);
                 break;
             case DOWN:
-                p.setLocation(p.getX()-36*speed,p.getY()+18*speed);
+                p.setLocation(p.getX() - 36 * speed, p.getY() + 18 * speed);
                 break;
             case LEFT:
-                p.setLocation(p.getX()-36*speed,p.getY()-18*speed);
+                p.setLocation(p.getX() - 36 * speed, p.getY() - 18 * speed);
                 break;
             case RIGHT:
-                p.setLocation(p.getX()+36*speed,p.getY()+18*speed);
+                p.setLocation(p.getX() + 36 * speed, p.getY() + 18 * speed);
                 break;
 
         }
-        //check direction cua square
 
     }
-
-
 
 
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        g.drawImage(sprite,p.x,p.y,null);
+        g.drawImage(sprite, p.x, p.y, null);
     }
 
     @Override
@@ -82,7 +112,7 @@ public class Box extends GameObject{
 
     private void loadImageByColor(ColorBox c) {
         try {
-            switch (c){
+            switch (c) {
                 case RED:
                     this.sprite = ImageIO.read(new File("resource/play button/red_box.png"));
                     break;
@@ -101,7 +131,8 @@ public class Box extends GameObject{
                 case WHITE:
                     this.sprite = ImageIO.read(new File("resource/play button/null_box.png"));
                     break;
-                default: break;
+                default:
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();

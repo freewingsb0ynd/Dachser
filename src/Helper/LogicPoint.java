@@ -6,19 +6,19 @@ import java.awt.*;
  * Created by Nhat on 23/11/2016.
  */
 public class LogicPoint {
-    public static final int baseX = 578;
-    public static final int baseY = -319;
+    public static final int baseX = 620;
+    public static final int baseY = -275;
+    public static final int offsetX = 42;
+    public static final int offsetY = 44;
     private int logicX;
     private int logicY;
 
     public static LogicPoint convertPointToLogicPoint(Point point) {
         int x = point.x;
         int y = point.y;
-        int baseInMapX = baseX + 42;
-        int baseInMapY = baseY + 62 - 18;
         LogicPoint logicPoint = new LogicPoint(point.x, point.y);
-        logicPoint.logicX = (2 * (y - baseInMapY) + (x - baseInMapX))/72;
-        logicPoint.logicY = (2 * (y - baseInMapY) - (x - baseInMapX))/72;
+        logicPoint.logicX = (2 * (y - baseY) + (x - baseX))/72;
+        logicPoint.logicY = (2 * (y - baseY) - (x - baseX))/72;
         return logicPoint;
     }
 
@@ -32,9 +32,12 @@ public class LogicPoint {
     }
 
     public Point convertToPoint(){
+        int baseImageX = baseX - offsetX;
+        int baseImageY = baseY - offsetY;
         Point point = new Point();
-        point.x = baseX + 36 * (logicX - logicY);
-        point.y = baseY + 18 * (logicX + logicY);
+
+        point.x = baseImageX + 36 * (logicX - logicY);
+        point.y = baseImageY + 18 * (logicX + logicY);
         return point;
     }
     public int getLogicX() {
