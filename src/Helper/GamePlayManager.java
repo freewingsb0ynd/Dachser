@@ -13,9 +13,6 @@ import java.util.Vector;
 
 import static CreateMap.MapCodeConst.*;
 import static GameObject.ConveyorMoving.TYPE_X_MID;
-import static GameObject.ConveyorMoving.TYPE_Y_MID;
-import static GameObject.Direction.NONE;
-import static GameObject.Direction.UP;
 
 /**
  * Created by Hoangelato on 01/12/2016.
@@ -116,9 +113,9 @@ public class GamePlayManager {
         int logicX = conveyorSwitch.getLogicPoint().getLogicX();
         int logicY = conveyorSwitch.getLogicPoint().getLogicY();
 
-        boolean isValidDirection[] = new boolean[4];
+        boolean[] isValidDirection = new boolean[4];
 
-        int neighborsMapCode[] = new int[4];
+        int[] neighborsMapCode = new int[4];
         neighborsMapCode[0]= map[logicX][logicY-1];
         neighborsMapCode[1]= map[logicX+1][logicY];
         neighborsMapCode[2]= map[logicX][logicY+1];
@@ -129,14 +126,14 @@ public class GamePlayManager {
                 isValidDirection[i] = false;
             } else if(neighborsMapCode[i] >= 5 && neighborsMapCode[i] <= 16) {
                  isValidDirection[i] = true;
-            } else if (getDirectionFromMapCode(neighborsMapCode[i]) != Conveyor.convertIndextoDirection(i)) {
+            } else if (getDirectionFromMapCode(neighborsMapCode[i]) != Conveyor.convertIndexToDirection(i)) {
                 isValidDirection[i] = false;
             } else isValidDirection[i] = true;
         }
 
         for (int i = 0; i < 4; i++) {
             if (isValidDirection[i]){
-                returnList.add(Conveyor.convertIndextoDirection(i));
+                returnList.add(Conveyor.convertIndexToDirection(i));
             }
         }
 
@@ -188,7 +185,7 @@ public class GamePlayManager {
             case NONSWITCH_UP:
             case SWITCH_UP:
             case CONVEYOR_UP:
-                return UP;
+                return Direction.UP;
             default:
                 return Direction.NONE;
         }

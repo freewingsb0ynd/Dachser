@@ -35,7 +35,7 @@ public class ConveyorSwitch extends ConveyorFixed {
 
     public ConveyorSwitch(int posX, int posY, Direction direction) {
         super(posX, posY);
-        this.logicPoint = LogicPoint.convertPointToLogicPoint(new Point(posX, posY));
+        this.logicPoint = LogicPoint.convertPointToLogicPoint(new Point(posX + 42, posY + 44));
         this.direction = direction;
 //
 //        initArrayDirection();
@@ -61,10 +61,10 @@ public class ConveyorSwitch extends ConveyorFixed {
         sprites = new ArrayList<>();
         //for
         try {
-            spriteUp = ImageIO.read(new File("resource/conveyor/x_switch/x_switch_up.png"));
-            spriteDown = ImageIO.read(new File("resource/conveyor/x_switch/x_switch_down.png"));
-            spriteLeft = ImageIO.read(new File("resource/conveyor/x_switch/x_switch_left.png"));
-            spriteRight = ImageIO.read(new File("resource/conveyor/x_switch/x_switch_right.png"));
+            spriteUp = ImageIO.read(new File("resource/conveyor/switch/switch_up.png"));
+            spriteDown = ImageIO.read(new File("resource/conveyor/switch/switch_down.png"));
+            spriteLeft = ImageIO.read(new File("resource/conveyor/switch/switch_left.png"));
+            spriteRight = ImageIO.read(new File("resource/conveyor/switch/switch_right.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,11 +110,14 @@ public class ConveyorSwitch extends ConveyorFixed {
     int index;
 
     public void changeDirection() {
-        sprite = sprites.get((probableDirections.indexOf(sprite) + 1) % probableDirections.size());
+        for (Direction d :
+                probableDirections) {
+            if (direction != d) {
+                direction = d;
+
+                return;
+            } else continue;
+        }
+
     }
-
-    private void checkNextDirection() {
-
-    }
-
 }

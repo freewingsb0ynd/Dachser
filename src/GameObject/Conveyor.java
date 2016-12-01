@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Conveyor extends GameObject {
 
-    public static Direction convertIndextoDirection(int index) {
+    public static Direction convertIndexToDirection(int index) {
         switch (index) {
             case 0:
                 return Direction.UP;

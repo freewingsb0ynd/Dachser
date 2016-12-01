@@ -17,7 +17,7 @@ public class ConveyorNonSwitchUp extends ConveyorNonSwitch {
     public void loadImage() {
         super.loadImage();
         try {
-            this.sprite = ImageIO.read(new File("resource/conveyor/x_nonswitch/x_nonswitch_up.png"));
+            this.sprite = ImageIO.read(new File("resource/conveyor/nonswitch/nonswitch_up.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
