@@ -15,7 +15,9 @@ public class Box extends GameObject {
     private double realY;
     private ColorBox color;
     private double speed;
-    public boolean isAllowToMove = true;
+    private LogicPoint logicPointBox;
+    public boolean isAllowToChange = true;
+
     private Direction direction = Direction.NONE;
     private static final int offsetX = 12;
     private static final int offsetY = 48;
@@ -33,6 +35,7 @@ public class Box extends GameObject {
         p = new Point(p.x + 42 - 6 - 12, p.y + 62 - 3 - 48);
         realX = posX = p.x;
         realY = posY = p.y;
+        logicPointBox = LogicPoint.convertPointToLogicPoint(new Point(posX + 12, posY + 48));
         this.color = color;
         loadImage();
 //        try {
@@ -56,64 +59,90 @@ public class Box extends GameObject {
 //        }
         speed = 0.02;
     }
-//    public ColorBox getColor(){
-//        return color;
-//    }
 
-//    public boolean hasToCheckDirection() {
-//        int x = posX + offsetX;
-//        int y = posY + offsetY;
-//        int xRaw, yRaw;
-//        LogicPoint lp = LogicPoint.convertPointToLogicPoint(new Point(x, y));
-//        Point map = lp.convertToPoint();
+    public ColorBox getColor() {
+        return color;
+    }
+
+    public void checkToChangDirection() {
+        int x = posX + offsetX;
+        int y = posY + offsetY;
+        int xRaw, yRaw;
+//        LogicPoint logicPointBox = LogicPoint.convertPointToLogicPoint(new Point(x, y));
+//        Point map = logicPointBox.convertToPoint();
 //        int midMapX = map.x + 42;
 //        int midMapY = map.y + 62;
-//        LogicPoint lpRaw;
-//        switch (direction) {
-//            case UP:
+        LogicPoint lpRaw;
+        switch (direction) {
+            case UP:
 //                return Math.abs(y - midMapY) < 3;
-////                xRaw = x + 18;
-////                yRaw = y - 9;
-////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
-////                return lp.getLogicY() == lpRaw.getLogicY();
-//
-//            case DOWN:
+
+                xRaw = x + 18;
+                yRaw = y - 9;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+                if (logicPointBox.getLogicY() == lpRaw.getLogicY()) {
+                    isAllowToChange = false;
+                } else {
+                    System.out.println("zzzzz");
+                    logicPointBox = new LogicPoint(lpRaw.getLogicX(), lpRaw.getLogicY());
+                    isAllowToChange = true;
+                }
+                break;
+
+            case DOWN:
 //                return Math.abs(y - midMapY) < 3;
-////                xRaw = x - 18;
-////                yRaw = y + 9;
-////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
-////                return lp.getLogicY() == lpRaw.getLogicY();
-//            case LEFT:
+                xRaw = x - 18;
+                yRaw = y + 9;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+                if (logicPointBox.getLogicY() == lpRaw.getLogicY()) {
+                    isAllowToChange = false;
+                } else {
+                    logicPointBox = new LogicPoint(lpRaw.getLogicX(), lpRaw.getLogicY());
+                    isAllowToChange = true;
+                }
+                break;
+            case LEFT:
 //                return Math.abs(x - midMapX) < 3;
-////                xRaw = x - 18;
-////                yRaw = y - 9;
-////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
-////                return lp.getLogicX() == lpRaw.getLogicX();
-//            case RIGHT:
+                xRaw = x - 18;
+                yRaw = y - 9;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+                if (logicPointBox.getLogicX() == lpRaw.getLogicX()) {
+                    isAllowToChange = false;
+                } else {
+                    logicPointBox = new LogicPoint(lpRaw.getLogicX(), lpRaw.getLogicY());
+                    isAllowToChange = true;
+                }
+                break;
+            case RIGHT:
 //                return Math.abs(x - midMapX) < 3;
-////                xRaw = x + 18;
-////                yRaw = y + 9;
-////                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
-////                return lp.getLogicX() == lpRaw.getLogicX();
-//            case NONE:
-//                break;
-//        }
-//        return false;
-//    }
+                xRaw = x + 18;
+                yRaw = y + 9;
+                lpRaw = LogicPoint.convertPointToLogicPoint(new Point(xRaw, yRaw));
+                if (logicPointBox.getLogicX() == lpRaw.getLogicX()) {
+                    isAllowToChange = false;
+                } else {
+                    logicPointBox = new LogicPoint(lpRaw.getLogicX(), lpRaw.getLogicY());
+                    isAllowToChange = true;
+                }
+                break;
+            default:
+                isAllowToChange = false;
+        }
+    }
 
     public LogicPoint getLogicPoint() {
         return LogicPoint.convertPointToLogicPoint(new Point(posX + 12, posY + 48));
     }
 
-//    public void checkToMove() {
+//    public void checkToChangDirection() {
 //        LogicPoint logicMap = this.getLogicPoint();
 //        int midLogicMapX = logicMap.getLogicX() + 42;
 //        int midLogicMapY = logicMap.getLogicY() + 62;
 //        int x = posX + offsetX;
 //        int y = posY + offsetY;
 //        if ((x - midLogicMapX) * (x - midLogicMapX) + (y - midLogicMapY) * (y - midLogicMapY) < 5000) {
-//            isAllowToMove = true;
-//        } else isAllowToMove = false;
+//            isAllowToChange = true;
+//        } else isAllowToChange = false;
 //    }
 
     public void movebyDirection() {
@@ -159,7 +188,7 @@ public class Box extends GameObject {
     @Override
     public void update() {
         super.update();
-        if (isAllowToMove) {
+        if (isAllowToChange) {
             changeDirection();
         }
     }

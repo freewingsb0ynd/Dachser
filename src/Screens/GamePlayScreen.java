@@ -1,5 +1,6 @@
 package Screens;
 
+import CreateMap.MapCodeConst;
 import GameObject.Conveyor;
 import GameObject.ConveyorSwitch;
 import Helper.GamePlayManager;
@@ -78,6 +79,24 @@ public class GamePlayScreen extends Screen {
             if (conveyorSwitch.clickArea.contains(pointClicked)) {
                 gamePlayManager.getProbableDirectionForAllSwitches();
                 conveyorSwitch.changeDirection();
+                int x = conveyorSwitch.getLogicPoint().getLogicX();
+                int y = conveyorSwitch.getLogicPoint().getLogicY();
+                switch (conveyorSwitch.getDirection()) {
+                    case UP:
+                        gamePlayManager.map[x][y] = MapCodeConst.SWITCH_UP;
+                        break;
+                    case RIGHT:
+                        gamePlayManager.map[x][y] = MapCodeConst.SWITCH_RIGHT;
+                        break;
+                    case DOWN:
+                        gamePlayManager.map[x][y] = MapCodeConst.SWITCH_DOWN;
+                        break;
+                    case LEFT:
+                        gamePlayManager.map[x][y] = MapCodeConst.SWITCH_LEFT;
+                        break;
+
+
+                }
             }
 
         }

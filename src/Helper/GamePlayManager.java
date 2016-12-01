@@ -1,6 +1,5 @@
 package Helper;
 
-import CreateMap.MapCodeConst;
 import GameObject.*;
 
 import java.awt.*;
@@ -110,12 +109,12 @@ public class GamePlayManager {
 
     public void updateDirectionForBoxes(){
 
-        System.out.println(box1.isAllowToMove);
+        System.out.println(box1.isAllowToChange);
 
-//        if (box1.isAllowToMove) {
+        if (box1.isAllowToChange) {
             box1.setDirection(getDirectionFromMapCode(map[box1.getLogicPoint().getLogicX()][box1.getLogicPoint().getLogicY()]));
-//        }
-//        box1.checkToMove();
+        }
+        box1.checkToChangDirection();
     }
 
     public void getProbableDirectionForAllSwitches() {

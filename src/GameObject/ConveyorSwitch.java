@@ -16,7 +16,7 @@ import static GameObject.Direction.*;
  * Created by Hoangelato on 22/11/2016.
  */
 public class ConveyorSwitch extends ConveyorFixed {
-    Direction direction = NONE;
+    private Direction direction = NONE;
     ArrayList<BufferedImage> sprites;
     private LogicPoint logicPoint;
     BufferedImage spriteUp, spriteDown, spriteLeft, spriteRight;
@@ -54,6 +54,9 @@ public class ConveyorSwitch extends ConveyorFixed {
         return logicPoint;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
 
     @Override
     public void loadImage() {
