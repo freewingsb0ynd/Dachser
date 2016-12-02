@@ -10,11 +10,11 @@ import Helper.LogicPoint;
 import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Vector;
 
 /**
@@ -30,6 +30,7 @@ public class GamePlayScreen extends Screen {
     Vector<Conveyor> conveyorList;
     public int score = 0;
     private int timeLeft;
+    public int highScore;
     private static final int fps = 60;
     int thisFPS = 0;
     private final Size buttonSize = new Size(50, 50);
@@ -39,6 +40,7 @@ public class GamePlayScreen extends Screen {
         this.gameWindow = gameWindow;
         loadImage();
         makeRect();
+        setHighScore();
         gamePlayManager = new GamePlayManager(mapFile);
         this.conveyorList = gamePlayManager.conveyorList;
         this.timeLeft = gamePlayManager.levelTime;
@@ -47,6 +49,24 @@ public class GamePlayScreen extends Screen {
     private void makeRect() {
         backgroundRect = new Rectangle(8, 31, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
         backRect = new Rectangle(1220, pointO.y,this.buttonSize.width, this.buttonSize.height);
+
+    }
+    void loadHighScore(){
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("resource/highscore.hs"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line = null;
+        try {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(line != null)
+            highScore = Integer.parseInt(line);
+
 
     }
 
@@ -91,6 +111,19 @@ public class GamePlayScreen extends Screen {
         }
 
     }
+    private void setHighScore(){
+        highScore = 60;
+
+        try {
+            File file = new File("/resource/highscore.hs");
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(highScore);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -106,6 +139,7 @@ public class GamePlayScreen extends Screen {
                     LogicPoint lp = new LogicPoint(i, j);
                     Point p = lp.convertToPoint();
                     try {
+
                         if (gamePlayManager.map[i][j] == MapCodeConst.PLANE) {
                             g.drawImage(ImageIO.read(new File("resource/Create map button/Map_plane.png")),
                                     p.x, p.y, null);
@@ -149,7 +183,7 @@ public class GamePlayScreen extends Screen {
         }
         System.out.println(gamePlayManager.boxOnMapList);
         g.setColor(Color.BLACK);
-        g.drawString("Score: " + score + "\t Time:" + timeLeft + "\t High Score: " + score, 40, 40);
+        g.drawString("Score: " + score + "\t Time:" + timeLeft + "\t High Score: " + highScore, 40, 40);
 
     }
 
