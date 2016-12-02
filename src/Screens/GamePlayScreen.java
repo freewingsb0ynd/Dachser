@@ -96,9 +96,7 @@ public class GamePlayScreen extends Screen {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, backgroundRect.x, backgroundRect.y, null);
-        for (Conveyor conveyorItems : conveyorList) {
-            conveyorItems.draw(g);
-        }
+
         for (int sum = 15; sum < 60; sum++) {
             for (int i = 0; i <= sum; i++) {
                 int j = sum - i;
@@ -137,6 +135,9 @@ public class GamePlayScreen extends Screen {
                     }
                 }
 
+            }
+            for (Conveyor conveyorItems : conveyorList) {
+                conveyorItems.draw(g);
             }
 
             g.drawImage(backBtn, backRect.x, backRect.y, null);

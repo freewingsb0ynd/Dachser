@@ -23,7 +23,7 @@ import java.util.Vector;
 import static CreateMap.MapCodeConst.*;
 import static CreateMap.MapCodeConst.CONVEYOR_LEFT;
 import static GameObject.ColorBox.*;
-import static GameObject.ConveyorMoving.TYPE_X_MID;
+import static GameObject.ConveyorMoving.*;
 
 /**
  * Created by Hoangelato on 01/12/2016.
@@ -31,12 +31,14 @@ import static GameObject.ConveyorMoving.TYPE_X_MID;
 public class GamePlayManager {
     public Vector<Conveyor> conveyorList;
     public Vector<ConveyorSwitch> conveyorSwitchList;
+
     public int map[][];
 
     public Queue<Box> boxWaitingList;
     public Queue<Box> boxOnMapList;
 
     public int score;
+    LogicPoint source;
 
     public Box box1;
 
@@ -52,15 +54,15 @@ public class GamePlayManager {
     private void startBoxManager() {
         boxWaitingList = new LinkedList<Box>();
 
-        box1 = new Box(new LogicPoint(12,15),PINK);
-        boxWaitingList.add(new Box(new LogicPoint(12,15),PINK));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),GREEN));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),BLUE));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),RED));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),PINK));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),GREEN));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),BLUE));
-        boxWaitingList.add(new Box(new LogicPoint(12,15),RED));
+        box1 = new Box(source,PINK);
+        boxWaitingList.add(new Box(source,PINK));
+        boxWaitingList.add(new Box(source,GREEN));
+        boxWaitingList.add(new Box(source,BLUE));
+        boxWaitingList.add(new Box(source,RED));
+        boxWaitingList.add(new Box(source,PINK));
+        boxWaitingList.add(new Box(source,GREEN));
+        boxWaitingList.add(new Box(source,BLUE));
+        boxWaitingList.add(new Box(source,RED));
 
         boxOnMapList = new LinkedList<Box>();
 //        for (int i=0;i<6;++i){
@@ -144,6 +146,9 @@ public class GamePlayManager {
 
                         //conveyorList.add(getConveyorFromMapCode(map[i][j], point.x, point.y));
                     }
+                    if (map[i][j] == SOURCE) source = new LogicPoint(lp.getLogicX()+1, lp.getLogicY());
+
+
                 }
             }
         }
@@ -161,6 +166,8 @@ public class GamePlayManager {
     int nextBoxTime=2000;
     int countTime = 0;
 
+
+
     public void makeBox(){
         countTime += 17;
 
@@ -174,8 +181,6 @@ public class GamePlayManager {
             boxOnMapList.add(boxWaitingList.poll());
 
             countTime = 0;
-            Random rand = new Random();
-//            nextBoxTime = rand.nextInt() * 2000 + 3000;
             nextBoxTime = (int) (Math.round(Math.random() * 2000) + 3000);
         }
     }
@@ -254,6 +259,12 @@ public class GamePlayManager {
             case SWITCH_UP:
             case SWITCH_RIGHT:
                 return new ConveyorSwitch(posX, posY, getDirectionFromMapCode(mapCode));
+            case END_DOWN:
+            case END_UP:
+                return new ConveyorYEnd(posX,posY);
+            case END_LEFT:
+            case END_RIGHT:
+                return new ConveyorXEnd(posX,posY);
         }
         return new Conveyor(posX, posY);
     }
@@ -323,7 +334,7 @@ public class GamePlayManager {
         switch (mapCode) {
             case CONVEYOR_UP:
             case CONVEYOR_DOWN:
-                return ConveyorMoving.TYPE_Y_MID;
+                return TYPE_Y_MID;
             case CONVEYOR_RIGHT:
             case CONVEYOR_LEFT:
                 return TYPE_X_MID;
