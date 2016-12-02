@@ -50,19 +50,19 @@ public class GamePlayManager {
     private void startBoxManager() {
         boxWaitingList = new LinkedList<Box>();
 
-        box1 = new Box(new LogicPoint(11,15),PINK);
-        boxWaitingList.add(new Box(new LogicPoint(11,15),PINK));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),GREEN));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),BLUE));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),RED));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),PINK));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),GREEN));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),BLUE));
-        boxWaitingList.add(new Box(new LogicPoint(11,15),RED));
+        box1 = new Box(new LogicPoint(12,15),PINK);
+        boxWaitingList.add(new Box(new LogicPoint(12,15),PINK));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),GREEN));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),BLUE));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),RED));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),PINK));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),GREEN));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),BLUE));
+        boxWaitingList.add(new Box(new LogicPoint(12,15),RED));
 
         boxOnMapList = new LinkedList<Box>();
 //        for (int i=0;i<6;++i){
-            boxOnMapList.add(boxWaitingList.poll());
+//            boxOnMapList.add(boxWaitingList.poll());
 //        }
 
         System.out.println(boxWaitingList);
@@ -146,36 +146,46 @@ public class GamePlayManager {
 
         getProbableDirectionForAllSwitches();
 
-        box1 = new Box(new LogicPoint(11, 15), PINK);
-        updateDirectionForBoxes();
-
-        System.out.println(getDirectionFromMapCode(map[11][15]));
-
         startBoxManager();
+
+//        box1 = new Box(new LogicPoint(11, 15), PINK);
+//        updateDirectionForBoxes();
+
+//        System.out.println(getDirectionFromMapCode(map[11][15]));
     }
+
+    int nextBoxTime=3000;
+    int countTime = 0;
+
     public void makeBox(){
-        int countTime = 0;
-        Random rand = new Random();
-        int makeBoxTime = rand.nextInt()*2000 + 3000;
-        while (countTime <= makeBoxTime){
-            countTime += 17;
-        }
-        if(!boxWaitingList.isEmpty())
+        countTime += 17;
+
+//        int makeBoxTime = rand.nextInt()*2000 + 3000;
+//        while (countTime <= makeBoxTime){
+
+//        }
+        System.out.println(countTime + "     " + nextBoxTime);
+
+        if(!boxWaitingList.isEmpty()&&boxOnMapList.size()<7&&countTime>nextBoxTime) {
             boxOnMapList.add(boxWaitingList.poll());
 
-
+            countTime = 0;
+            Random rand = new Random();
+            nextBoxTime = rand.nextInt() * 2000 + 3000;
+        }
     }
 
     public void updateDirectionForBoxes(){
 
-        System.out.println(box1.isAllowToChange);
-//        for (Box b: boxOnMapList){
-//            if (b.isAllowToChange) {
-//                b.setDirection(getDirectionFromMapCode(map[b.getLogicPoint().getLogicX()][b.getLogicPoint().getLogicY()]));
-//            }
-//            b.checkToChangDirection();
-//        }
-        box1.checkToChangDirection();
+        //System.out.println(box1.isAllowToChange);
+        System.out.println(boxOnMapList);
+        for (Box b: boxOnMapList){
+            if (b.isAllowToChange) {
+                b.setDirection(getDirectionFromMapCode(map[b.getLogicPoint().getLogicX()][b.getLogicPoint().getLogicY()]));
+            }
+            b.checkToChangDirection();
+        }
+        //box1.checkToChangDirection();
     }
 
     public void getProbableDirectionForAllSwitches() {
