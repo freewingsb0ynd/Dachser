@@ -28,6 +28,7 @@ public class GamePlayScreen extends Screen {
     GamePlayManager gamePlayManager;
 
     Vector<Conveyor> conveyorList;
+
     public int score = 0;
     private int timeLeft;
     public int highScore;
