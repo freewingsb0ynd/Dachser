@@ -48,9 +48,16 @@ public class GamePlayScreen extends Screen {
 //        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
 //            conveyorSwitch.update();
 //        }
+
         System.out.println(gamePlayManager.box1.getDirection());
         gamePlayManager.updateDirectionForBoxes();
         gamePlayManager.box1.movebyDirection();
+        gamePlayManager.makeBox();
+        if(!gamePlayManager.boxOnMapList.isEmpty()){
+            for (Box b: gamePlayManager.boxOnMapList) {
+                b.update();
+            }
+        }
 
     }
 
@@ -63,13 +70,15 @@ public class GamePlayScreen extends Screen {
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
         }
-//        for (Box b: gamePlayManager.boxOnMapList){
-//            b.draw(g);
-//        }
+        if(!gamePlayManager.boxOnMapList.isEmpty()){
+            for (Box b: gamePlayManager.boxOnMapList) {
+                b.draw(g);
+            }
+        }
 
         g.setColor(Color.BLACK);
         //g.drawString("Score: "+score+"\t Time:"+time+"\t High Score: "+score, 40, 40);
-        gamePlayManager.box1.draw(g);
+
     }
 
     @Override

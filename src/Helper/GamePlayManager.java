@@ -39,7 +39,6 @@ public class GamePlayManager {
     public int score;
 
     public Box box1;
-    public BufferedImage imageMap[][] = null;
 
     public GamePlayManager() {
         loadMap();
@@ -76,7 +75,6 @@ public class GamePlayManager {
 
 
     public void update() {
-
     }
 
 
@@ -154,6 +152,18 @@ public class GamePlayManager {
         System.out.println(getDirectionFromMapCode(map[11][15]));
 
         startBoxManager();
+    }
+    public void makeBox(){
+        int countTime = 0;
+        Random rand = new Random();
+        int makeBoxTime = rand.nextInt()*2000 + 3000;
+        while (countTime <= makeBoxTime){
+            countTime += 17;
+        }
+        if(!boxWaitingList.isEmpty())
+            boxOnMapList.add(boxWaitingList.poll());
+
+
     }
 
     public void updateDirectionForBoxes(){
