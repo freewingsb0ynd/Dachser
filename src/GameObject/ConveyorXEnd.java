@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Created by Hoangelato on 17/11/2016.
  */
-public class ConveyorXEnd {
+public class ConveyorXEnd extends ConveyorEnd{
     public ConveyorXEnd(int posX, int posY) {
 //        super(posX, posY);
 //        this.animation = new AnimationHelper("resource/conveyor/end_left/end_left(", 199, 4);

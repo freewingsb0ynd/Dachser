@@ -28,9 +28,9 @@ public class GamePlayScreen extends Screen {
     private static final int fps = 60;
     int thisFPS=0;
 
-    public GamePlayScreen() {
+    public GamePlayScreen(File mapFile) {
         loadBackground();
-        gamePlayManager = new GamePlayManager();
+        gamePlayManager = new GamePlayManager(mapFile);
         this.conveyorList = gamePlayManager.conveyorList;
         this.timeLeft = gamePlayManager.levelTime;
     }

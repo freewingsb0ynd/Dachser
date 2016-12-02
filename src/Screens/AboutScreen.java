@@ -41,7 +41,9 @@ public class AboutScreen extends Screens.Screen{
 
     private void makeRect(){
 
-        homeRect = new Rectangle(this.gameWindow.getWidth()/2 - homeButton.getWidth()/2, this.gameWindow.getHeight() - homeButton.getHeight(), homeButton.getWidth(), homeButton.getHeight());
+        homeRect = new Rectangle(this.gameWindow.getWidth()/2 - homeButton.getWidth()/2,
+                this.gameWindow.getHeight() - homeButton.getHeight(),
+                homeButton.getWidth(), homeButton.getHeight());
 
     }
 
@@ -60,8 +62,8 @@ public class AboutScreen extends Screens.Screen{
     public void mouseClicked(MouseEvent e) {
         if (homeRect.contains(e.getX(), e.getY())){
             System.out.println("click home");
-            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.removeMouseListener(this);
+            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
     }

@@ -302,8 +302,8 @@ public class CreateMapScreen extends Screens.Screen {
         }
 
         if (backRect.contains(e.getX(), e.getY())) {
-            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.removeMouseListener(this);
+            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
         if (waterRect.contains(e.getX(), e.getY())) {

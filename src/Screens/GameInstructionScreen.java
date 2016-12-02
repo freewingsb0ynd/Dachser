@@ -78,7 +78,7 @@ public class GameInstructionScreen extends Screens.Screen{
 //        g.drawImage(guideBox, box.x , box.y, null);
 //        g.drawImage(backButton, backRect.x, backRect.y, null);
 //        g.drawImage(nextButton, nextRect.x, nextRect.y, null);
-//        g.drawImage(homeButton, homeRect.x, homeRect.y, null);
+//        g.drawImage(homeImage, homeRect.x, homeRect.y, null);
     }
 
     @Override

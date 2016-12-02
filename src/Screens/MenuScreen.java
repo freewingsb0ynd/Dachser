@@ -82,10 +82,11 @@ public class MenuScreen extends Screen {
     public void mouseClicked(MouseEvent e) {
         if (playRect.contains(e.getX(),e.getY())){
             // kich vao play
-            GamePlayScreen GamePlayScreen = new GamePlayScreen();
+            MapChosenScreen mapChosenScreen = new MapChosenScreen(gameWindow);
+
             gameWindow.removeMouseListener(this);
-            gameWindow.addMouseListener(GamePlayScreen);
-            GameManager.getInstance().getStackScreen().push(GamePlayScreen);
+            gameWindow.addMouseListener(mapChosenScreen);
+            GameManager.getInstance().getStackScreen().push(mapChosenScreen);
         }
         if (createmapRect.contains(e.getX(), e.getY())){
             CreateMapScreen createMapScreen = new CreateMapScreen(gameWindow);

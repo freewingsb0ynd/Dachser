@@ -40,8 +40,8 @@ public class GamePlayManager {
 
     public Box box1;
 
-    public GamePlayManager() {
-        loadMap();
+    public GamePlayManager(File mapFile) {
+        loadMap(mapFile);
 //        getImagesFromMap();
 
 
@@ -80,11 +80,11 @@ public class GamePlayManager {
     }
 
 
-    private void loadMap() {
+    private void loadMap(File mapFile) {
         map = new int[36][36];
         try {
 
-            FileReader f = new FileReader("resource/Map/map1.pam");
+            FileReader f = new FileReader(mapFile);
             BufferedReader reader = new BufferedReader(f);
             String line = reader.readLine();
             line = reader.readLine();
