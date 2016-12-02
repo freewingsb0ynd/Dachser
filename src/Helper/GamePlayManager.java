@@ -172,7 +172,7 @@ public class GamePlayManager {
             countTime = 0;
             Random rand = new Random();
 //            nextBoxTime = rand.nextInt() * 2000 + 3000;
-
+            nextBoxTime = (int) (Math.round(Math.random() * 2000) + 3000);
         }
     }
 
