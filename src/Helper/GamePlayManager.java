@@ -154,7 +154,7 @@ public class GamePlayManager {
 //        System.out.println(getDirectionFromMapCode(map[11][15]));
     }
 
-    int nextBoxTime=3000;
+    int nextBoxTime=2000;
     int countTime = 0;
 
     public void makeBox(){
@@ -171,7 +171,8 @@ public class GamePlayManager {
 
             countTime = 0;
             Random rand = new Random();
-            nextBoxTime = rand.nextInt() * 2000 + 3000;
+//            nextBoxTime = rand.nextInt() * 2000 + 3000;
+
         }
     }
 
