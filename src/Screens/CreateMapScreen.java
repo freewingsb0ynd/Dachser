@@ -30,7 +30,7 @@ public class CreateMapScreen extends Screens.Screen {
     private Rectangle backgroundRect, sourceRect, deleteRect, conveyorRect, eraseRect, planeRect,
             saveRect, shipRect, truckRect, undoRect, waterRect, roadRect, treeRect, backRect;
 
-    private BufferedImage[] imageInMap = new BufferedImage[30];
+    public BufferedImage[] imageInMap = new BufferedImage[30];
 //    private BufferedImage cursorImage;
 //    private Cursor cursor = Cursor.getDefaultCursor();
 
@@ -43,6 +43,10 @@ public class CreateMapScreen extends Screens.Screen {
         this.loadImage();
         this.loadImageInMap();
         this.makeRect();
+    }
+
+    public CreateMapScreen() {
+
     }
 
     private void loadImage() {
@@ -162,7 +166,7 @@ public class CreateMapScreen extends Screens.Screen {
 //         thuc hien draw cai map kia
     }
 
-    private void loadImageInMap() {
+    public void loadImageInMap() {
         try {
             imageInMap[MapCodeConst.NONSWITCH_DOWN]
                     = imageInMap[MapCodeConst.CONVEYOR_DOWN]
