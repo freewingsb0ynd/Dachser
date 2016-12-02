@@ -104,6 +104,7 @@ public class GamePlayManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         //
         //        map = new int[36][36];
         //        map[12][15] = SOURCE;
@@ -120,6 +121,7 @@ public class GamePlayManager {
         //            map[i][19] = CONVEYOR_LEFT;
         //        }
         //        map[21][21] = CONVEYOR_DOWN;
+
 
 
         conveyorList = new Vector<Conveyor>();

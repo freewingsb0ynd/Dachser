@@ -96,35 +96,35 @@ public class CampaignScreen extends Screen {
     public void mouseClicked(MouseEvent e) {
         if (level_1_Rect.contains(e.getX(), e.getY())) {
             File mapFile = new File("resource/Map/map1.pam");
-            GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+            GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_2_Rect.contains(e.getX(), e.getY())) {
             File mapFile = new File("resource/Map/map2.pam");
-            GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+            GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_3_Rect.contains(e.getX(), e.getY())) {
             File mapFile = new File("resource/Map/map3.pam");
-            GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+            GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_4_Rect.contains(e.getX(), e.getY())) {
             File mapFile = new File("resource/Map/map4.pam");
-            GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+            GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_5_Rect.contains(e.getX(), e.getY())) {
             File mapFile = new File("resource/Map/map5.pam");
-            GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+            GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);

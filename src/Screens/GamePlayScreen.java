@@ -1,11 +1,13 @@
 package Screens;
 
 import CreateMap.MapCodeConst;
+import Game.GameWindow;
 import GameObject.Box;
 import GameObject.Conveyor;
 import GameObject.ConveyorSwitch;
 import Helper.GamePlayManager;
 import Helper.LogicPoint;
+import com.sun.glass.ui.Size;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,7 +21,9 @@ import java.util.Vector;
  * Created by Hoangelato on 17/11/2016.
  */
 public class GamePlayScreen extends Screen {
-    BufferedImage background;
+    GameWindow gameWindow;
+    BufferedImage background, backBtn;
+    Rectangle backRect, backgroundRect;
 
     GamePlayManager gamePlayManager;
 
@@ -27,21 +31,35 @@ public class GamePlayScreen extends Screen {
     public int score = 0;
     private int timeLeft;
     private static final int fps = 60;
-    int thisFPS=0;
+    int thisFPS = 0;
+    private final Size buttonSize = new Size(50, 50);
+    private final Point pointO = new Point(10, 30);
 
-    public GamePlayScreen(File mapFile) {
-        loadBackground();
+    public GamePlayScreen(GameWindow gameWindow, File mapFile) {
+        this.gameWindow = gameWindow;
+        loadImage();
+        makeRect();
         gamePlayManager = new GamePlayManager(mapFile);
         this.conveyorList = gamePlayManager.conveyorList;
         this.timeLeft = gamePlayManager.levelTime;
     }
 
-    void loadBackground() {
+    private void makeRect() {
+        backgroundRect = new Rectangle(8, 31, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
+        backRect = new Rectangle(1220, pointO.y,this.buttonSize.width, this.buttonSize.height);
+
+    }
+
+    void loadImage() {
         try {
-            background = ImageIO.read(new File("resource/Image/background_4.png"));
+            background = ImageIO.read(new File("resource/Image/play_background.png"));
+            backBtn = ImageIO.read(new File("resource/Create map button/Button_back.png"));
+
+            backBtn =  setSize(backBtn, this.buttonSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
 
@@ -51,9 +69,9 @@ public class GamePlayScreen extends Screen {
             conveyorItems.update();
         }
 
-        thisFPS +=1;
-        if (thisFPS>=fps) {
-            thisFPS =0;
+        thisFPS += 1;
+        if (thisFPS >= fps) {
+            thisFPS = 0;
             timeLeft--;
         }
 
@@ -66,8 +84,8 @@ public class GamePlayScreen extends Screen {
         gamePlayManager.updateDirectionForBoxes();
 //        gamePlayManager.box1.movebyDirection();
         gamePlayManager.makeBox();
-        if(!gamePlayManager.boxOnMapList.isEmpty()){
-            for (Box b: gamePlayManager.boxOnMapList) {
+        if (!gamePlayManager.boxOnMapList.isEmpty()) {
+            for (Box b : gamePlayManager.boxOnMapList) {
                 b.movebyDirection();
             }
         }
@@ -75,18 +93,16 @@ public class GamePlayScreen extends Screen {
     }
 
 
-
-
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background, 8, 31, null);
+        g.drawImage(background, backgroundRect.x, backgroundRect.y, null);
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
         }
-        for(int sum = 15; sum < 60; sum++){
-            for(int i = 0; i <= sum; i++){
+        for (int sum = 15; sum < 60; sum++) {
+            for (int i = 0; i <= sum; i++) {
                 int j = sum - i;
-                if(i <= 35 && j <= 35) {
+                if (i <= 35 && j <= 35) {
                     LogicPoint lp = new LogicPoint(i, j);
                     Point p = lp.convertToPoint();
                     try {
@@ -113,28 +129,33 @@ public class GamePlayScreen extends Screen {
                         if (gamePlayManager.map[i][j] == MapCodeConst.TREE) {
                             g.drawImage(ImageIO.read(new File("resource/Create map button/Map_tree.png")), p.x, p.y, null);
                         }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.SOURCE) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_truck.png")), p.x - 72 -36, p.y + 18, null);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
             }
+
+            g.drawImage(backBtn, backRect.x, backRect.y, null);
         }
 
-        if(!gamePlayManager.boxOnMapList.isEmpty()){
-            for (Box b: gamePlayManager.boxOnMapList) {
+        if (!gamePlayManager.boxOnMapList.isEmpty()) {
+            for (Box b : gamePlayManager.boxOnMapList) {
                 b.draw(g);
             }
         }
         System.out.println(gamePlayManager.boxOnMapList);
         g.setColor(Color.BLACK);
-        g.drawString("Score: "+score+"\t Time:"+timeLeft+"\t High Score: "+score, 40, 40);
+        g.drawString("Score: " + score + "\t Time:" + timeLeft + "\t High Score: " + score, 40, 40);
 
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Point pointClicked = new Point(e.getX(),e.getY());
+        Point pointClicked = new Point(e.getX(), e.getY());
 //
 //        System.out.println("p =" + e.getX() + "," + e.getY());
 //        LogicPoint f = LogicPoint.convertPointToLogicPoint(e.getPoint());
@@ -142,7 +163,7 @@ public class GamePlayScreen extends Screen {
 //
 
 
-        for (ConveyorSwitch conveyorSwitch: gamePlayManager.conveyorSwitchList){
+        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
             if (conveyorSwitch.clickArea.contains(pointClicked)) {
                 gamePlayManager.getProbableDirectionForAllSwitches();
                 conveyorSwitch.changeDirection();
@@ -166,6 +187,11 @@ public class GamePlayScreen extends Screen {
                 }
             }
 
+        }
+        if (backRect.contains(e.getX(), e.getY())) {
+            this.gameWindow.removeMouseListener(this);
+            Screens.GameManager.getInstance().getStackScreen().pop();
+            this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
     }
 

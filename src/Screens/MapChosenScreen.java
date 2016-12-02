@@ -89,7 +89,7 @@ public class MapChosenScreen extends Screen {
             int rVal = chooserMap.showOpenDialog(this);
             if(rVal == JFileChooser.APPROVE_OPTION) {
                 File mapFile = chooserMap.getSelectedFile();
-                GamePlayScreen gamePlayScreen = new GamePlayScreen(mapFile);
+                GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
                 gameWindow.removeMouseListener(this);
                 gameWindow.addMouseListener(gamePlayScreen);
                 GameManager.getInstance().getStackScreen().push(gamePlayScreen);

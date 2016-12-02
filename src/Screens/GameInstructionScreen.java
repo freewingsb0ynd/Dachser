@@ -98,8 +98,8 @@ public class GameInstructionScreen extends Screens.Screen{
 
         if (homeRect.contains(e.getX(), e.getY())){
             System.out.println("click home");
-            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.removeMouseListener(this);
+            Screens.GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
     }
