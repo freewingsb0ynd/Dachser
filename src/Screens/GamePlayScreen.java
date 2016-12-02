@@ -5,6 +5,7 @@ import GameObject.Box;
 import GameObject.Conveyor;
 import GameObject.ConveyorSwitch;
 import Helper.GamePlayManager;
+import Helper.LogicPoint;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -81,6 +82,43 @@ public class GamePlayScreen extends Screen {
         g.drawImage(background, 8, 31, null);
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.draw(g);
+        }
+        for(int sum = 15; sum < 60; sum++){
+            for(int i = 0; i <= sum; i++){
+                int j = sum - i;
+                if(i <= 35 && j <= 35) {
+                    LogicPoint lp = new LogicPoint(i, j);
+                    Point p = lp.convertToPoint();
+                    try {
+                        if (gamePlayManager.map[i][j] == MapCodeConst.PLANE) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_plane.png")),
+                                    p.x, p.y, null);
+                        }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.TRUCK) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_truck.png")),
+                                    p.x, p.y, null);
+                        }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.SHIP) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_ship.png")),
+                                    p.x, p.y, null);
+                        }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.ROAD) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_road.png")),
+                                    p.x, p.y, null);
+                        }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.WATER) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_water.png")),
+                                    p.x, p.y, null);
+                        }
+                        if (gamePlayManager.map[i][j] == MapCodeConst.TREE) {
+                            g.drawImage(ImageIO.read(new File("resource/Create map button/Map_tree.png")), p.x, p.y, null);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
         }
 
         if(!gamePlayManager.boxOnMapList.isEmpty()){
