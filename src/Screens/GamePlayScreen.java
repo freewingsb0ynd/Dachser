@@ -23,11 +23,16 @@ public class GamePlayScreen extends Screen {
     GamePlayManager gamePlayManager;
 
     Vector<Conveyor> conveyorList;
+    public int score = 0;
+    private int timeLeft;
+    private static final int fps = 60;
+    int thisFPS=0;
 
     public GamePlayScreen() {
         loadBackground();
         gamePlayManager = new GamePlayManager();
         this.conveyorList = gamePlayManager.conveyorList;
+        this.timeLeft = gamePlayManager.levelTime;
     }
 
     void loadBackground() {
@@ -43,6 +48,12 @@ public class GamePlayScreen extends Screen {
     public void update() {
         for (Conveyor conveyorItems : conveyorList) {
             conveyorItems.update();
+        }
+
+        thisFPS +=1;
+        if (thisFPS>=fps) {
+            thisFPS =0;
+            timeLeft--;
         }
 
 //        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
@@ -79,7 +90,7 @@ public class GamePlayScreen extends Screen {
         }
         System.out.println(gamePlayManager.boxOnMapList);
         g.setColor(Color.BLACK);
-        //g.drawString("Score: "+score+"\t Time:"+time+"\t High Score: "+score, 40, 40);
+        g.drawString("Score: "+score+"\t Time:"+timeLeft+"\t High Score: "+score, 40, 40);
 
     }
 

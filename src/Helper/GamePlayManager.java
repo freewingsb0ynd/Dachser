@@ -47,6 +47,8 @@ public class GamePlayManager {
 
     }
 
+    public int levelTime = 180;
+
     private void startBoxManager() {
         boxWaitingList = new LinkedList<Box>();
 
