@@ -9,6 +9,12 @@ import GameObject.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.Queue;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +22,7 @@ import java.util.Vector;
 
 import static CreateMap.MapCodeConst.*;
 import static CreateMap.MapCodeConst.CONVEYOR_LEFT;
-import static GameObject.ColorBox.PINK;
+import static GameObject.ColorBox.*;
 import static GameObject.ConveyorMoving.TYPE_X_MID;
 
 /**
@@ -26,13 +32,45 @@ public class GamePlayManager {
     public Vector<Conveyor> conveyorList;
     public Vector<ConveyorSwitch> conveyorSwitchList;
     public int map[][];
-    public Vector<Box> boxList;
+
+    public Queue<Box> boxWaitingList;
+    public Queue<Box> boxOnMapList;
+
+    public int score;
+
     public Box box1;
     public BufferedImage imageMap[][] = null;
 
     public GamePlayManager() {
         loadMap();
 //        getImagesFromMap();
+
+
+    }
+
+    private void startBoxManager() {
+        boxWaitingList = new LinkedList<Box>();
+
+        box1 = new Box(new LogicPoint(11,15),PINK);
+        boxWaitingList.add(new Box(new LogicPoint(11,15),PINK));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),GREEN));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),BLUE));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),RED));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),PINK));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),GREEN));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),BLUE));
+        boxWaitingList.add(new Box(new LogicPoint(11,15),RED));
+
+        boxOnMapList = new LinkedList<Box>();
+//        for (int i=0;i<6;++i){
+            boxOnMapList.add(boxWaitingList.poll());
+//        }
+
+        System.out.println(boxWaitingList);
+        System.out.println(boxOnMapList);
+
+        updateDirectionForBoxes();
+
 
     }
 
@@ -46,7 +84,7 @@ public class GamePlayManager {
         map = new int[36][36];
         try {
 
-            FileReader f = new FileReader("resource/Map/map100");
+            FileReader f = new FileReader("resource/Map/map1.pam");
             BufferedReader reader = new BufferedReader(f);
             String line = reader.readLine();
             line = reader.readLine();
@@ -114,15 +152,19 @@ public class GamePlayManager {
         updateDirectionForBoxes();
 
         System.out.println(getDirectionFromMapCode(map[11][15]));
+
+        startBoxManager();
     }
 
-    public void updateDirectionForBoxes() {
+    public void updateDirectionForBoxes(){
 
         System.out.println(box1.isAllowToChange);
-
-        if (box1.isAllowToChange) {
-            box1.setDirection(getDirectionFromMapCode(map[box1.getLogicPoint().getLogicX()][box1.getLogicPoint().getLogicY()]));
-        }
+//        for (Box b: boxOnMapList){
+//            if (b.isAllowToChange) {
+//                b.setDirection(getDirectionFromMapCode(map[b.getLogicPoint().getLogicX()][b.getLogicPoint().getLogicY()]));
+//            }
+//            b.checkToChangDirection();
+//        }
         box1.checkToChangDirection();
     }
 
@@ -131,7 +173,6 @@ public class GamePlayManager {
             getProbableDirection(conveyorSwitch);
         }
     }
-
 
     void getProbableDirection(ConveyorSwitch conveyorSwitch) {
         ArrayList<Direction> returnList = new ArrayList<Direction>();
@@ -268,4 +309,3 @@ public class GamePlayManager {
 
 
 }
-

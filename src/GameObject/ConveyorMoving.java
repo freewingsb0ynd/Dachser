@@ -33,12 +33,12 @@ public class ConveyorMoving extends Conveyor {
 
     public Conveyor getConveyorByType(int type){
         switch (type){
-            case TYPE_X_END:
-                return new ConveyorXEnd(this.posX,this.posY);
+//            case TYPE_X_END:
+//                return new ConveyorXEnd(this.posX,this.posY);
             case TYPE_X_MID:
                 return new ConveyorXMid(this.posX,this.posY);
-            case TYPE_Y_END:
-                return new ConveyorYEnd(this.posX,this.posY);
+//            case TYPE_Y_END:
+//                return new ConveyorYEnd(this.posX,this.posY);
             case TYPE_Y_MID:
                 return new ConveyorYMid(this.posX,this.posY);
 

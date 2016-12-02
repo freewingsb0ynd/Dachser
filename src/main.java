@@ -8,7 +8,7 @@ import java.io.IOException;
 public class main {
     public static void main(String[] args) throws IOException {
         GameWindow gameWindow = new GameWindow();
-          Thread thread = new Thread(gameWindow);
+        Thread thread = new Thread(gameWindow);
         thread.start();
     }
 }
