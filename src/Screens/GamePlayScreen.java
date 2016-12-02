@@ -92,6 +92,9 @@ public class GamePlayScreen extends Screen {
                     }if(gamePlayManager.map[i][j] == MapCodeConst.TREE){
                         g.drawImage(ImageIO.read(new File("resource/Create map button/Map_tree.png")),
                                 p.x, p.y, null);
+                    } if (gamePlayManager.map[i][j] == MapCodeConst.SOURCE) {
+                        g.drawImage(ImageIO.read(new File("resource/Create map button/Map_truck.png")),
+                                p.x - 72, p.y,null);
                     }
 
                     }catch (IOException e) {

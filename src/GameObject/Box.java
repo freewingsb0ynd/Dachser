@@ -19,8 +19,8 @@ public class Box extends GameObject {
     public boolean isAllowToChange = true;
 
     private Direction direction = Direction.NONE;
-    private static final int offsetX = 12;
-    private static final int offsetY = 48;
+    private static final int OFFSET_X = 12;
+    private static final int OFFSET_Y = 48;
 
     public void setDirection(Direction d) {
         this.direction = d;
@@ -65,8 +65,8 @@ public class Box extends GameObject {
     }
 
     public void checkToChangDirection() {
-        int x = posX + offsetX;
-        int y = posY + offsetY;
+        int x = posX + OFFSET_X;
+        int y = posY + OFFSET_Y;
         int xRaw, yRaw;
 //        LogicPoint logicPointBox = LogicPoint.convertPointToLogicPoint(new Point(x, y));
 //        Point map = logicPointBox.convertToPoint();
@@ -138,8 +138,8 @@ public class Box extends GameObject {
 //        LogicPoint logicMap = this.getLogicPoint();
 //        int midLogicMapX = logicMap.getLogicX() + 42;
 //        int midLogicMapY = logicMap.getLogicY() + 62;
-//        int x = posX + offsetX;
-//        int y = posY + offsetY;
+//        int x = posX + OFFSET_X;
+//        int y = posY + OFFSET_Y;
 //        if ((x - midLogicMapX) * (x - midLogicMapX) + (y - midLogicMapY) * (y - midLogicMapY) < 5000) {
 //            isAllowToChange = true;
 //        } else isAllowToChange = false;

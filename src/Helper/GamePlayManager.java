@@ -46,7 +46,7 @@ public class GamePlayManager {
         map = new int[36][36];
         try {
 
-            FileReader f = new FileReader("resource/Map/map4.pam");
+            FileReader f = new FileReader("resource/Map/map100");
             BufferedReader reader = new BufferedReader(f);
             String line = reader.readLine();
             line = reader.readLine();
