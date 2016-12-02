@@ -86,6 +86,9 @@ public class CreateMapManager {
         int y1 = operation.getP1().getLogicY();
         int x2 = operation.getP2().getLogicX();
         int y2 = operation.getP2().getLogicY();
+        if(x1 + y1 <= 18) {
+            return false;
+        }
         if (operationStack.isEmpty()) {
             return operation.getCode() == OperationConst.SET_SOURCE;
         }

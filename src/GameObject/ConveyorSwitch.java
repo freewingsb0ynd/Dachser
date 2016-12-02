@@ -113,11 +113,10 @@ public class ConveyorSwitch extends ConveyorFixed {
     int index;
 
     public void changeDirection() {
-        for (Direction d :
-                probableDirections) {
-            if (direction != d) {
-                direction = d;
-                loadSpriteByDirection(d);
+        for (int i = 0; i < probableDirections.size(); i++) {
+            if (direction == probableDirections.get(i)) {
+                direction = probableDirections.get((i + 1) % probableDirections.size());
+                loadSpriteByDirection(direction);
                 return;
             } else continue;
         }

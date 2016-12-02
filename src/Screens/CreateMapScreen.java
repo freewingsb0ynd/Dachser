@@ -68,6 +68,7 @@ public class CreateMapScreen extends Screens.Screen {
             waterBtn = ImageIO.read(new File("resource/Create map button/Button_water.png"));
             roadBtn = ImageIO.read(new File("resource/Create map button/Button_road.png"));
             treeBtn = ImageIO.read(new File("resource/Create map button/Button_tree.png"));
+            backBtn = ImageIO.read(new File("resource/Create map button/Button_back.png"));
 
 
 //            background = setSize(background, this.gameWindow.windowSize);
@@ -86,6 +87,8 @@ public class CreateMapScreen extends Screens.Screen {
             planeBtn = setSize(planeBtn, this.buttonSize);
             shipBtn = setSize(shipBtn, this.buttonSize);
             truckBtn = setSize(truckBtn, this.buttonSize);
+
+            backBtn =  setSize(backBtn, this.buttonSize);
 
 
         } catch (IOException e) {
@@ -113,6 +116,7 @@ public class CreateMapScreen extends Screens.Screen {
         roadRect = makeRect(13);
         treeRect = makeRect(14);
 
+        backRect = new Rectangle(1220, pointO.y,this.buttonSize.width, this.buttonSize.height);
     }
 
     private Rectangle makeRect(int i) {
@@ -146,6 +150,8 @@ public class CreateMapScreen extends Screens.Screen {
         g.drawImage(waterBtn, waterRect.x, waterRect.y, null);
         g.drawImage(roadBtn, roadRect.x, roadRect.y, null);
         g.drawImage(treeBtn, treeRect.x, treeRect.y, null);
+
+        g.drawImage(backBtn, backRect.x, backRect.y, null);
     }
 
     private void drawMap(Graphics g) {
@@ -293,6 +299,12 @@ public class CreateMapScreen extends Screens.Screen {
                 }
             }
             return;
+        }
+
+        if (backRect.contains(e.getX(), e.getY())) {
+            Screens.GameManager.getInstance().getStackScreen().pop();
+            this.gameWindow.removeMouseListener(this);
+            this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
         if (waterRect.contains(e.getX(), e.getY())) {
             status = OperationConst.SET_WATER;

@@ -47,7 +47,7 @@ public class MapCodeConst {
     public static final int PLANE = 23;
     public static final int TREE_1 = 24;
     public static final int TREE_2 = 25;
-
+    public static final int BACK = 26;
 
 }
 

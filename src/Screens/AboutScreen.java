@@ -30,7 +30,7 @@ public class AboutScreen extends Screens.Screen{
 
         try {
             background = ImageIO.read(new File("resource/instruction button/about background.jpg"));
-            homeButton = ImageIO.read(new File("resource/instruction button/home button.gif"));
+            homeButton = ImageIO.read(new File("resource/instruction button/home button.png"));
 
             background = setSize(background, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
             homeButton = setSize(homeButton, 100, 100);
